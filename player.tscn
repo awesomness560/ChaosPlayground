@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://br01chminlckq"]
+
+[ext_resource type="Script" path="res://Scripts/CharacterBody3D.gd" id="1_502fm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ua1y4"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dlk0p"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4ipxv"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_23jgk"]
+viewport_path = NodePath("AboveHead/SubViewport")
+
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("camera", "usernameLabel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.932028, 0)
+collision_layer = 2
+script = ExtResource("1_502fm")
+camera = NodePath("Camera")
+usernameLabel = NodePath("AboveHead/SubViewport/Username")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ua1y4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_dlk0p")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(0.999957, 2.99752e-05, -0.00928451, 0, 0.999995, 0.00322851, 0.00928456, -0.00322837, 0.999952, -0.0689928, 0.029552, -0.276869)
+fov = 85.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_4ipxv")
+
+[node name="AboveHead" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38654, 0)
+sorting_offset = 1.0
+flip_h = true
+no_depth_test = true
+texture = SubResource("ViewportTexture_23jgk")
+
+[node name="SubViewport" type="SubViewport" parent="AboveHead"]
+size = Vector2i(200, 50)
+
+[node name="Username" type="Label" parent="AboveHead/SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -11.5
+offset_right = 45.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "SomeName"
+horizontal_alignment = 1
+vertical_alignment = 1

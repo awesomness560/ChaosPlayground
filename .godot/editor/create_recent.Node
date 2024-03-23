@@ -1,0 +1,14 @@
+GridMap
+StaticBody3D
+CollisionShape3D
+MeshInstance3D
+Node
+Label
+Sprite3D
+SubViewport
+VBoxContainer
+Label3D
+MultiplayerSynchronizer
+MultiplayerSpawner
+Marker3D
+Node3D

@@ -1,0 +1,7 @@
+res://main_scene.tscn
+res://player.tscn
+res://Scenes/lobby.tscn
+res://Scenes/multiplayer_ui.tscn
+res://Scenes/block_grid.tscn
+res://Scripts/CharacterBody3D.gd
+res://Scripts/multiplayer_menu.gd
