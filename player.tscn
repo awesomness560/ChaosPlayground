@@ -60,7 +60,7 @@ script = ExtResource("2_c20k6")
 camera = NodePath("..")
 
 [node name="HollowPurpleLauncher" type="Node3D" parent="Camera/AbilityManager"]
-transform = Transform3D(1, -7.23783e-25, 0, -8.67362e-18, 1, 5.55112e-17, 0, -5.55112e-17, 1, -1.92507e-08, 0, -8.54704)
+transform = Transform3D(1, -7.23783e-25, 0, -1.56125e-17, 1, 5.55112e-17, 0, -5.55112e-17, 1, -0.128133, 0, -8.547)
 script = ExtResource("2_5ujj8")
 projectile = ExtResource("3_sdmte")
 
