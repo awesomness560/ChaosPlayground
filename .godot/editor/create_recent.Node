@@ -1,3 +1,9 @@
+VBoxContainer
+ScrollContainer
+MultiplayerSpawner
+Button
+Node
+Node2D
 MultiplayerSynchronizer
 GPUParticles3D
 AnimationPlayer
@@ -7,9 +13,3 @@ OmniLight3D
 WorldEnvironment
 GPUParticlesAttractorSphere3D
 Camera3D
-Area3D
-CollisionShape3D
-RigidBody3D
-TextureRect
-Timer
-ShapeCast3D

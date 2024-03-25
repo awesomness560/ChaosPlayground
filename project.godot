@@ -10,10 +10,9 @@ config_version=5
 
 [application]
 
-config/name="First Person 3D Template"
+config/name="Chaos Playground"
 run/main_scene="res://main_scene.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.png"
 
 [autoload]
 

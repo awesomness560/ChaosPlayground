@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://wcgrt7a3iru"]
+
+[ext_resource type="Script" path="res://Scripts/Steam/multiplayer_spawner.gd" id="1_27jt2"]
+[ext_resource type="PackedScene" uid="uid://bbmy27rqceyo4" path="res://Scenes/test_world.tscn" id="1_swhp3"]
+[ext_resource type="PackedScene" uid="uid://br01chminlckq" path="res://player.tscn" id="2_jqjii"]
+
+[node name="Level" type="Node"]
+
+[node name="World" parent="." instance=ExtResource("1_swhp3")]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player.tscn")
+spawn_path = NodePath(".")
+script = ExtResource("1_27jt2")
+playerScene = ExtResource("2_jqjii")
