@@ -3,8 +3,9 @@ class_name Player
 
 
 @export var  SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 10
 @export var sensivity = 0.3
+@export var gravity : float = 9.8
 var fov = false
 var lerp_speed= 1
 
@@ -24,7 +25,7 @@ func _ready():
 	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+#var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 
 func _input(event):
@@ -48,10 +49,10 @@ func _physics_process(delta):
 	if Input.is_action_pressed("RUN"):
 		$Camera.fov +=2
 		$Camera.fov = clamp($Camera.fov,85,110)
-		SPEED = 7.0
-	if  Input.is_action_just_released("RUN"):
+		SPEED = 15
+	if  Input.is_action_just_released("RUN"): #HACK: The POV snaps back to normal. I might want to tween insteads
 		$Camera.fov = 85
-		SPEED = 5.0
+		SPEED = 10
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.

@@ -1,18 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://br01chminlckq"]
+[gd_scene load_steps=12 format=3 uid="uid://br01chminlckq"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody3D.gd" id="1_502fm"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ua1y4"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_dlk0p"]
+[ext_resource type="Script" path="res://Scripts/Abilities/hollow_purple_launcher.gd" id="2_5ujj8"]
+[ext_resource type="Script" path="res://Scripts/Abilities/ability_manager.gd" id="2_c20k6"]
+[ext_resource type="Material" uid="uid://b12hlj4bxcqdb" path="res://Materials/playerSeeThrough.tres" id="2_x4883"]
+[ext_resource type="Script" path="res://Scripts/player_camera.gd" id="3_amtfd"]
+[ext_resource type="PackedScene" uid="uid://b7p0pxcabf0my" path="res://Scenes/Abilities/hollow_purple.tscn" id="3_sdmte"]
+[ext_resource type="Texture2D" uid="uid://ew77ki5612h2" path="res://Assets/circle-32.png" id="6_k4mi5"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4ipxv"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
+properties/1/path = NodePath("Camera:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ua1y4"]
+radius = 1.51764
+height = 6.15123
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dlk0p"]
+material = ExtResource("2_x4883")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_23jgk"]
 viewport_path = NodePath("AboveHead/SubViewport")
@@ -21,21 +33,51 @@ viewport_path = NodePath("AboveHead/SubViewport")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.932028, 0)
 collision_layer = 2
 script = ExtResource("1_502fm")
+SPEED = 10.0
+gravity = 20.0
 camera = NodePath("Camera")
 usernameLabel = NodePath("AboveHead/SubViewport/Username")
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_4ipxv")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.09585, 0)
 shape = SubResource("CapsuleShape3D_ua1y4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 2.06791, 0)
 mesh = SubResource("CapsuleMesh_dlk0p")
 
 [node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(0.999957, 2.99752e-05, -0.00928451, 0, 0.999995, 0.00322851, 0.00928456, -0.00322837, 0.999952, -0.0689928, 0.029552, -0.276869)
+transform = Transform3D(0.999957, 2.99753e-05, -0.00928451, 0, 0.999995, 0.00322851, 0.00928456, -0.00322837, 0.999952, -0.0689928, 3.72129, -1.45325)
 fov = 85.0
+script = ExtResource("3_amtfd")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_4ipxv")
+[node name="AbilityManager" type="Node3D" parent="Camera" node_paths=PackedStringArray("camera")]
+transform = Transform3D(0.999957, 1.81899e-12, 0.00928456, 2.99753e-05, 0.999995, -0.00322837, -0.00928451, 0.00322851, 0.999952, 0.0715604, -0.0304435, 0.27612)
+script = ExtResource("2_c20k6")
+camera = NodePath("..")
+
+[node name="HollowPurpleLauncher" type="Node3D" parent="Camera/AbilityManager"]
+transform = Transform3D(1, -7.23783e-25, 0, -8.67362e-18, 1, 5.55112e-17, 0, -5.55112e-17, 1, -1.92507e-08, 0, -8.54704)
+script = ExtResource("2_5ujj8")
+projectile = ExtResource("3_sdmte")
+
+[node name="TextureRect" type="TextureRect" parent="Camera"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_k4mi5")
 
 [node name="AboveHead" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38654, 0)
