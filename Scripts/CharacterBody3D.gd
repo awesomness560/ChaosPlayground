@@ -10,6 +10,7 @@ var fov = false
 var lerp_speed= 1
 
 @export var camera : Camera3D
+@export var thirdPersonCamera : ThirdPersonCamera
 @export var usernameLabel : Label
 var username : String : set = setUsername
 
@@ -19,7 +20,8 @@ func _enter_tree():
 func _ready():
 	if not is_multiplayer_authority(): return
 	
-	camera.current = true
+	#camera.current = true
+	thirdPersonCamera.current = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)

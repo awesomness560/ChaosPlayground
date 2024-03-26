@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://br01chminlckq"]
+[gd_scene load_steps=13 format=3 uid="uid://br01chminlckq"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody3D.gd" id="1_502fm"]
 [ext_resource type="Script" path="res://Scripts/Abilities/hollow_purple_launcher.gd" id="2_5ujj8"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/player_camera.gd" id="3_amtfd"]
 [ext_resource type="PackedScene" uid="uid://b7p0pxcabf0my" path="res://Scenes/Abilities/hollow_purple.tscn" id="3_sdmte"]
 [ext_resource type="Texture2D" uid="uid://ew77ki5612h2" path="res://Assets/circle-32.png" id="6_k4mi5"]
+[ext_resource type="PackedScene" uid="uid://wmf2eu0uuhrg" path="res://addons/third-person-camera/third_person_camera/ThirdPersonCamera.tscn" id="8_pq4rd"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4ipxv"]
 properties/0/path = NodePath(".:position")
@@ -29,13 +30,14 @@ material = ExtResource("2_x4883")
 [sub_resource type="ViewportTexture" id="ViewportTexture_23jgk"]
 viewport_path = NodePath("AboveHead/SubViewport")
 
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("camera", "usernameLabel")]
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("camera", "thirdPersonCamera", "usernameLabel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.932028, 0)
 collision_layer = 2
 script = ExtResource("1_502fm")
 SPEED = 10.0
 gravity = 20.0
 camera = NodePath("Camera")
+thirdPersonCamera = NodePath("ThirdPersonCamera")
 usernameLabel = NodePath("AboveHead/SubViewport/Username")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -104,3 +106,6 @@ grow_vertical = 2
 text = "SomeName"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ThirdPersonCamera" parent="." instance=ExtResource("8_pq4rd")]
+mouse_follow = true

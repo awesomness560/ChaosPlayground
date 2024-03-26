@@ -1,3 +1,5 @@
+GPUParticles3D
+ThirdPersonCamera
 VBoxContainer
 ScrollContainer
 MultiplayerSpawner
@@ -5,11 +7,8 @@ Button
 Node
 Node2D
 MultiplayerSynchronizer
-GPUParticles3D
 AnimationPlayer
 Node3D
 MeshInstance3D
 OmniLight3D
 WorldEnvironment
-GPUParticlesAttractorSphere3D
-Camera3D

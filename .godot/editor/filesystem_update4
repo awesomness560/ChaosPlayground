@@ -14,3 +14,4 @@ res://Scenes/Steam/main.tscn
 res://Scenes/Steam/level.tscn
 res://Scenes/test_world.tscn
 res://Scripts/CharacterBody3D.gd
+res://TPC-demo/TestScene.tscn
