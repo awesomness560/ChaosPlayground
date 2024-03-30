@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://br01chminlckq"]
+[gd_scene load_steps=15 format=3 uid="uid://br01chminlckq"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody3D.gd" id="1_502fm"]
 [ext_resource type="Script" path="res://Scripts/Abilities/hollow_purple_launcher.gd" id="2_5ujj8"]
@@ -7,38 +7,57 @@
 [ext_resource type="Script" path="res://Scripts/player_camera.gd" id="3_amtfd"]
 [ext_resource type="PackedScene" uid="uid://b7p0pxcabf0my" path="res://Scenes/Abilities/hollow_purple.tscn" id="3_sdmte"]
 [ext_resource type="Texture2D" uid="uid://ew77ki5612h2" path="res://Assets/circle-32.png" id="6_k4mi5"]
-[ext_resource type="PackedScene" uid="uid://wmf2eu0uuhrg" path="res://addons/third-person-camera/third_person_camera/ThirdPersonCamera.tscn" id="8_pq4rd"]
+[ext_resource type="Script" path="res://Scripts/third_person_camera.gd" id="8_5iau8"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4ipxv"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("Camera:rotation")
+properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath(".:rotation")
+properties/2/path = NodePath("FirstPersonCamera:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("Visuals:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("CameraMount:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ua1y4"]
 radius = 1.51764
 height = 6.15123
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_dlk0p"]
-material = ExtResource("2_x4883")
-
 [sub_resource type="ViewportTexture" id="ViewportTexture_23jgk"]
 viewport_path = NodePath("AboveHead/SubViewport")
 
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("camera", "thirdPersonCamera", "usernameLabel")]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dlk0p"]
+material = ExtResource("2_x4883")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fbmt0"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_1fh3h"]
+material = SubResource("StandardMaterial3D_fbmt0")
+
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("firstPersonCamera", "visuals", "usernameLabel", "thirdPersonCamera", "springArm", "thirdPersonShoulderCam", "camMount")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.932028, 0)
 collision_layer = 2
 script = ExtResource("1_502fm")
 SPEED = 10.0
 gravity = 20.0
-camera = NodePath("Camera")
-thirdPersonCamera = NodePath("ThirdPersonCamera")
+offsetThirdPerson = Vector3(0, 3.3, 0)
+sensHorizontal = 0.2
+sensVetical = 0.2
+firstPersonCamera = NodePath("FirstPersonCamera")
+visuals = NodePath("Visuals")
 usernameLabel = NodePath("AboveHead/SubViewport/Username")
+thirdPersonCamera = NodePath("ThirdPerson/ThirdPersonCamera")
+springArm = NodePath("ThirdPerson")
+thirdPersonShoulderCam = NodePath("CameraMount/SpringArm3D/Camera3D")
+camMount = NodePath("CameraMount")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_4ipxv")
@@ -47,26 +66,23 @@ replication_config = SubResource("SceneReplicationConfig_4ipxv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.09585, 0)
 shape = SubResource("CapsuleShape3D_ua1y4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 2.06791, 0)
-mesh = SubResource("CapsuleMesh_dlk0p")
-
-[node name="Camera" type="Camera3D" parent="."]
+[node name="FirstPersonCamera" type="Camera3D" parent="."]
 transform = Transform3D(0.999957, 2.99753e-05, -0.00928451, 0, 0.999995, 0.00322851, 0.00928456, -0.00322837, 0.999952, -0.0689928, 3.72129, -1.45325)
 fov = 85.0
 script = ExtResource("3_amtfd")
 
-[node name="AbilityManager" type="Node3D" parent="Camera" node_paths=PackedStringArray("camera")]
+[node name="AbilityManager" type="Node3D" parent="FirstPersonCamera" node_paths=PackedStringArray("camera", "player")]
 transform = Transform3D(0.999957, 1.81899e-12, 0.00928456, 2.99753e-05, 0.999995, -0.00322837, -0.00928451, 0.00322851, 0.999952, 0.0715604, -0.0304435, 0.27612)
 script = ExtResource("2_c20k6")
 camera = NodePath("..")
+player = NodePath("../..")
 
-[node name="HollowPurpleLauncher" type="Node3D" parent="Camera/AbilityManager"]
+[node name="HollowPurpleLauncher" type="Node3D" parent="FirstPersonCamera/AbilityManager"]
 transform = Transform3D(1, -7.23783e-25, 0, -1.56125e-17, 1, 5.55112e-17, 0, -5.55112e-17, 1, -0.128133, 0, -8.547)
 script = ExtResource("2_5ujj8")
 projectile = ExtResource("3_sdmte")
 
-[node name="TextureRect" type="TextureRect" parent="Camera"]
+[node name="TextureRect" type="TextureRect" parent="FirstPersonCamera"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -107,5 +123,32 @@ text = "SomeName"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ThirdPersonCamera" parent="." instance=ExtResource("8_pq4rd")]
-mouse_follow = true
+[node name="ThirdPerson" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.51332, 3.35949, 0)
+spring_length = 7.0
+margin = 0.2
+script = ExtResource("8_5iau8")
+
+[node name="ThirdPersonCamera" type="Camera3D" parent="ThirdPerson"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.60442, 0, 0)
+
+[node name="CameraMount" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraMount"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.01111, 1.47838, 0)
+spring_length = 7.0
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="CameraMount/SpringArm3D"]
+
+[node name="Visuals" type="Node3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 2.06791, 0)
+mesh = SubResource("CapsuleMesh_dlk0p")
+skeleton = NodePath("../..")
+
+[node name="Eyes" type="MeshInstance3D" parent="Visuals/Mesh"]
+transform = Transform3D(0.255, 0, 0, 0, 0.255, 0, 0, 0, 0.255, 0, 0.479182, -0.496471)
+mesh = SubResource("SphereMesh_1fh3h")

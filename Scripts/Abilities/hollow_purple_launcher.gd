@@ -23,7 +23,13 @@ func spawnProjectile():
 	#hollowPurple.rotation_degrees = abilityManager.camera.global_transform.basis.get_euler()
 	#hollowPurple.config(-abilityManager.camera.global_basis.z)
 	hollowPurple.transform = transform
-	hollowPurple.linear_velocity = global_transform.basis.z * -1 * hollowPurple.speed
+	#FIRST PERSON METHOD
+	#hollowPurple.linear_velocity = global_transform.basis.z * -1 * hollowPurple.speed
+	match abilityManager.player.controlMode:
+		abilityManager.player.ControllerType.FIRST_PERSON:
+			hollowPurple.linear_velocity = global_transform.basis.z * -1 * hollowPurple.speed
+		abilityManager.player.ControllerType.THIRD_PERSON_SHOULDER:
+			hollowPurple.linear_velocity = abilityManager.player.thirdPersonShoulderCam.global_transform.basis.z * -1 * hollowPurple.speed
 	hollowPurple.config()
 	add_child(hollowPurple, true)
 	hollowPurple.global_position = global_position
