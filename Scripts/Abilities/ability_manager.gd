@@ -3,6 +3,7 @@ class_name AbilityManager
 
 @export var camera : Camera3D
 @export var player : Player
+@export var playerVisuals : Node3D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

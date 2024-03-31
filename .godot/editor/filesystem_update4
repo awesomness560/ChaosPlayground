@@ -1,10 +1,8 @@
 res://player.tscn
-res://Scripts/player_camera.gd
 res://Materials/playerSeeThrough.tres
 res://Assets/water_effect2.gdshader
 res://Assets/meshBlocks.tres
 res://Assets/water_effect.gdshader
-res://Scripts/CharacterBody3D.gd
 res://Scenes/lobby.tscn
 res://Scenes/multiplayer_ui.tscn
 res://Scenes/block_grid.tscn
@@ -13,5 +11,5 @@ res://Scenes/Abilities/hollow_purple.tscn
 res://Scenes/Steam/main.tscn
 res://Scenes/Steam/level.tscn
 res://Scenes/test_world.tscn
-res://Scripts/Abilities/ability_manager.gd
-res://Scripts/Abilities/hollow_purple_launcher.gd
+res://Scenes/Abilities/hollow_purple_launcher.tscn
+res://Scenes/Visuals/main_character.tscn

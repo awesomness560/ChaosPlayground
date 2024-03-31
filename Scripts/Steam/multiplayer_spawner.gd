@@ -14,6 +14,7 @@ var players : Dictionary = {}
 func spawnPlayer(data):
 	var p = playerScene.instantiate()
 	p.name = str(data)
+	p.username.text = str(Steam.getPersonaName())
 	players[data] = p
 	return p
 

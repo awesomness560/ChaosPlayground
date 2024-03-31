@@ -1,5 +1,6 @@
-SpringArm3D
 Node3D
+Timer
+SpringArm3D
 CharacterBody3D
 Camera3D
 MeshInstance3D
@@ -11,4 +12,3 @@ MultiplayerSpawner
 Button
 Node
 Node2D
-MultiplayerSynchronizer

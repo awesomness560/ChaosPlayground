@@ -1,19 +1,26 @@
 extends RigidBody3D
+class_name HollowPurpleProjectile
+
+signal initalAnimationFinished
 
 @export var shapeCast : ShapeCast3D
 @export var speed = 30
 @export var animationPlayer : AnimationPlayer
+var abilityManager : AbilityManager
 
 var velocity : Vector3
 var isAbleToBreak : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	top_level = true
+	#top_level = true
+	pass
 
 func config():
 	velocity = linear_velocity
 	animationPlayer.play("startup")
 	freeze = true
+	abilityManager = get_parent().get_parent() #HACK: get_parent is not the nicest way of doing this
+	abilityManager.player.controlMode = abilityManager.player.ControllerType.THIRD_PERSON
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -35,9 +42,13 @@ func _on_delete_timer_timeout():
 
 
 func _on_hollow_purple_animation_finished(anim_name):
+	initalAnimationFinished.emit()
+	top_level = true
 	freeze = false
 	linear_velocity = velocity
 	isAbleToBreak = true
 	#HACK: I am using too many get_parent(). Please don't do this
 	var cam : PlayerCamera = get_parent().get_parent().get_parent()
 	cam._camera_shake()
+	
+	abilityManager.player.controlMode = abilityManager.player.ControllerType.FIRST_PERSON

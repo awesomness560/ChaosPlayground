@@ -3,14 +3,17 @@ class_name Player
 
 enum ControllerType {FIRST_PERSON, THIRD_PERSON, THIRD_PERSON_SHOULDER}
 
-@export var  SPEED = 5.0
 @export var JUMP_VELOCITY = 10
 @export var sensivity = 0.3
 @export var gravity : float = 9.8
 var fov = false
 var lerp_speed= 1
-@export var controlMode : ControllerType
+@export var controlMode : ControllerType : set = matchCurrentCamera
 @export var offsetThirdPerson : Vector3
+@export_group("Speed")
+var SPEED = 5.0
+@export var walkingSpeed : float = 20
+@export var runningSpeed : float = 15
 
 #Third Person Variables
 var snapVector : Vector3 = Vector3.DOWN
@@ -23,6 +26,7 @@ var lockBody : bool = false
 @export_group("References")
 @export var firstPersonCamera : Camera3D
 @export var visuals : Node3D
+@export var characterAnimator : AnimationPlayer
 #@export var thirdPersonCamera : ThirdPersonCamera
 @export var usernameLabel : Label
 @export_subgroup("Third Person")
@@ -34,17 +38,15 @@ var lockBody : bool = false
 
 var username : String : set = setUsername
 
+var isGravity : bool = true ##Determines if gravity is enabled
+var isRunning : bool = false
+var isInAir : bool = false
+
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
-	match controlMode:
-		ControllerType.FIRST_PERSON:
-			firstPersonCamera.current = is_multiplayer_authority()
-		ControllerType.THIRD_PERSON:
-			thirdPersonCamera.current = is_multiplayer_authority()
-		ControllerType.THIRD_PERSON_SHOULDER:
-			thirdPersonShoulderCam.current = is_multiplayer_authority()
+	matchCurrentCamera(controlMode)
 	
 	if not is_multiplayer_authority(): return
 	
@@ -57,6 +59,17 @@ func _ready():
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 #var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+func matchCurrentCamera(control : ControllerType):
+	controlMode = control
+	
+	match control:
+		ControllerType.FIRST_PERSON:
+			firstPersonCamera.current = is_multiplayer_authority()
+		ControllerType.THIRD_PERSON:
+			thirdPersonCamera.current = is_multiplayer_authority()
+			thirdPersonCamera.get_parent_node_3d().global_rotation = firstPersonCamera.global_rotation
+		ControllerType.THIRD_PERSON_SHOULDER:
+			thirdPersonShoulderCam.current = is_multiplayer_authority()
 
 func _input(event):
 	if not is_multiplayer_authority(): return
@@ -77,10 +90,13 @@ func _physics_process(delta):
 	
 	match controlMode:
 		ControllerType.FIRST_PERSON:
+			visuals.hide()
 			firstPersonMovment(delta)
 		ControllerType.THIRD_PERSON:
+			visuals.show()
 			thirdPersonMovement(delta)
 		ControllerType.THIRD_PERSON_SHOULDER:
+			visuals.show()
 			thirdPersonShoulderMovement(delta)
 
 func _process(delta):
@@ -136,7 +152,10 @@ func thirdPersonMovement(delta):
 	
 	velocity.x = moveDirection.x * SPEED
 	velocity.z = moveDirection.z * SPEED
-	velocity.y -= gravity * delta
+	if isGravity:
+		velocity.y -= gravity * delta
+	elif not velocity.y < 0:
+		velocity.y -= gravity * delta
 	
 	var justLanded : bool = is_on_floor() and snapVector == Vector3.ZERO
 	var isJumping : bool = is_on_floor() and Input.is_action_just_pressed("jump")
@@ -148,9 +167,9 @@ func thirdPersonMovement(delta):
 	floor_snap_length = snapVector.y
 	move_and_slide()
 	
-	if velocity.length() > 0.2:
-		var lookDirection = Vector2(velocity.z, velocity.x)
-		visuals.rotation.y = lookDirection.angle()
+	#if velocity.length() > 0.2:
+		#var lookDirection = Vector2(velocity.z, velocity.x)
+		#visuals.rotation.y = lookDirection.angle()
 
 func firstPersonInput(event):
 	if event is InputEventMouseMotion:
@@ -159,29 +178,45 @@ func firstPersonInput(event):
 		rotation_degrees.y -= event.relative.x * sensivity
 
 func firstPersonMovment(delta):
+	if is_on_floor():
+		isInAir = false
 	# Add the gravity.
-	if not is_on_floor():
+	if not is_on_floor() and isGravity:
 		velocity.y -= gravity * delta
-
+		
+	#print(characterAnimator.current_animation)
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		characterAnimator.play("falling")
+		isInAir = true
 	if Input.is_action_pressed("RUN"):
 		firstPersonCamera.fov +=2
 		firstPersonCamera.fov = clamp(firstPersonCamera.fov,85,110)
-		SPEED = 15
+		SPEED = runningSpeed
+		isRunning = true
 	if  Input.is_action_just_released("RUN"): #HACK: The POV snaps back to normal. I might want to tween insteads
 		firstPersonCamera.fov = 85
-		SPEED = 10
+		SPEED = walkingSpeed
+		isRunning = false
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
+		if isRunning:
+			if not characterAnimator.current_animation == "running" and not isInAir:
+				characterAnimator.play("running")
+		else:
+			if not characterAnimator.current_animation == "walking" and not isInAir:
+				characterAnimator.play("walking")
+		
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:
+		if not characterAnimator.current_animation == "idle" and not isInAir:
+			characterAnimator.play("idle")
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
