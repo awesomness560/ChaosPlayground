@@ -10,12 +10,18 @@ var abilityManager : AbilityManager
 
 var velocity : Vector3
 var isAbleToBreak : bool = false
+var voxelTool : VoxelTool
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#top_level = true
 	pass
 
 func config():
+	var terrain : VoxelTerrain = get_tree().get_first_node_in_group("terrain")
+	voxelTool = terrain.get_voxel_tool()
+	voxelTool.channel = VoxelBuffer.CHANNEL_TYPE
+	voxelTool.value = 0
+	
 	velocity = linear_velocity
 	animationPlayer.play("startup")
 	freeze = true
@@ -29,12 +35,22 @@ func _process(delta):
 		#position += direction * speed * delta
 	
 	#translate(direction * speed * delta)
-	
-	shapeCast.force_shapecast_update()
+	#voxelTool.do_sphere(global_position, 5)
+	#shapeCast.force_shapecast_update()
 	if shapeCast.is_colliding() and isAbleToBreak:
-		for i in shapeCast.get_collision_count():
-			if shapeCast.get_collider(i).has_method("destroyTile"):
-				shapeCast.get_collider(i).destroyTile.rpc(shapeCast.get_collision_point(i) - shapeCast.get_collision_normal(i))
+		voxelTool.do_sphere(global_position, 5)
+		#voxelTool.do_sphere(position, 2000)
+		#voxelTool.do_point(shapeCast.get_collision_point(0))
+		#for i in shapeCast.get_collision_count():
+			#voxelTool.set_voxel(shapeCast.get_collision_point(i), 0)
+		#print(voxelTool.get_voxel(shapeCast.get_collision_point(0)))
+		#var vox := voxelTool.get_voxel(shapeCast.get_collision_point(0))
+		#vox = 0
+		#voxelTool.set_voxel(shapeCast.get_collision_point(0), 0)
+		
+		#for i in shapeCast.get_collision_count():
+			#if shapeCast.get_collider(i).has_method("destroyTile"):
+				#shapeCast.get_collider(i).destroyTile.rpc(shapeCast.get_collision_point(i) - shapeCast.get_collision_normal(i))
 
 
 func _on_delete_timer_timeout():

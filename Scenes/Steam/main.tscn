@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://Scripts/Steam/main.gd" id="1_bgqyg"]
 [ext_resource type="Script" path="res://Scripts/Steam/steam.gd" id="2_4bf1r"]
 
-[node name="main" type="Node2D" node_paths=PackedStringArray("vBox")]
+[node name="main" type="Node2D"]
 script = ExtResource("1_bgqyg")
 mainLevel = "res://Scenes/Steam/level.tscn"
-vBox = NodePath("LobbyContainer/Lobbies")
+vBox = null
 
 [node name="Steam" type="Node" parent="."]
 script = ExtResource("2_4bf1r")

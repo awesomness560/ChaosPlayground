@@ -41,6 +41,7 @@ func addPlayer(peer_id = 1, username : String = "NoName"):
 	player.name = str(peer_id)
 	player.username = username
 	add_child(player)
+	player.global_position.y += 80
 
 func removePlayer(id):
 	var player = get_node(str(id))

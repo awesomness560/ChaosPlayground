@@ -1,8 +1,10 @@
 res://player.tscn
 res://Materials/playerSeeThrough.tres
 res://Assets/water_effect2.gdshader
+res://Resources/blocky_lib.tres
 res://Assets/meshBlocks.tres
 res://Assets/water_effect.gdshader
+res://Scripts/Abilities/hollow_purple.gd
 res://Scenes/lobby.tscn
 res://Scenes/multiplayer_ui.tscn
 res://Scenes/block_grid.tscn
@@ -13,3 +15,4 @@ res://Scenes/Steam/level.tscn
 res://Scenes/test_world.tscn
 res://Scenes/Abilities/hollow_purple_launcher.tscn
 res://Scenes/Visuals/main_character.tscn
+res://Scripts/multiplayer_menu.gd

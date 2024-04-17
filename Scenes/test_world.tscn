@@ -13,14 +13,14 @@ ground_energy_multiplier = 1.79
 sun_angle_max = 0.0
 sun_curve = 31.1904
 
-[sub_resource type="Sky" id="Sky_xac0c"]
+[sub_resource type="Sky" id="Sky_ssngo"]
 sky_material = SubResource("ProceduralSkyMaterial_sac6i")
 
 [sub_resource type="Environment" id="Environment_tq4cp"]
 background_mode = 2
 background_color = Color(1, 1, 1, 1)
 background_energy_multiplier = 3.87
-sky = SubResource("Sky_xac0c")
+sky = SubResource("Sky_ssngo")
 ambient_light_source = 3
 ambient_light_color = Color(1, 1, 1, 1)
 ssr_enabled = true
