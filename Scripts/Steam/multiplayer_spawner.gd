@@ -12,12 +12,13 @@ func _ready():
 var players : Dictionary = {}
 
 func spawnPlayer(data):
-	var p = playerScene.instantiate()
-	p.name = str(data)
-	p.username.text = str(Steam.getPersonaName())
-	players[data] = p
-	return p
+	#var p = playerScene.instantiate()
+	#p.name = str(data)
+	##p.username.text = str(Steam.getPersonaName())
+	#players[data] = p
+	return MultiplayerManager.addPlayer(data)
 
 func removePlayer(data):
-	players[data].queue_free()
+	#players[data].queue_free()
+	MultiplayerManager.removePlayer(data)
 	players.erase(data)

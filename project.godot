@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 [autoload]
 
 Lobby="*res://Scenes/lobby.tscn"
+MultiplayerManager="*res://Scenes/Autoloads/multiplayer_manager.tscn"
 
 [editor_plugins]
 

@@ -1,3 +1,5 @@
+Node
+VoxelTerrainMultiplayerSynchronizer
 VoxelTerrain
 VoxelViewer
 StaticBody3D
@@ -11,5 +13,3 @@ Camera3D
 GPUParticles3D
 ThirdPersonCamera
 VBoxContainer
-ScrollContainer
-MultiplayerSpawner

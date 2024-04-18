@@ -34,7 +34,8 @@ func on_join_button_pressed():
 	Lobby.join_game(addressEntry.text)
 
 func onPlayerConnected(id : int, playerInfo : Dictionary):
-	addPlayer(id, playerInfo.keys()[0])
+	#addPlayer(id, playerInfo.keys()[0])
+	MultiplayerManager.connectPlayer(id)
 
 func addPlayer(peer_id = 1, username : String = "NoName"):
 	var player : Player = playerScene.instantiate()
@@ -44,8 +45,7 @@ func addPlayer(peer_id = 1, username : String = "NoName"):
 	player.global_position.y += 80
 
 func removePlayer(id):
-	var player = get_node(str(id))
-	player.queue_free()
+	MultiplayerManager.removePlayer(id)
 
 #Previous Code for Reference
 #func _on_host_button_pressed():

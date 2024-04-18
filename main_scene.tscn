@@ -1,14 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://dru60kpstsqwb"]
+[gd_scene load_steps=11 format=3 uid="uid://dru60kpstsqwb"]
 
 [ext_resource type="Script" path="res://Scripts/scene_manager.gd" id="1_jtvhr"]
 [ext_resource type="PackedScene" uid="uid://lj0dtp2ysahg" path="res://Scenes/multiplayer_ui.tscn" id="2_imde0"]
 [ext_resource type="VoxelBlockyLibrary" uid="uid://b2fxfhw0xvfma" path="res://Resources/blocky_lib.tres" id="3_80vek"]
 
+[sub_resource type="Curve" id="Curve_da0lf"]
+_data = [Vector2(0.021978, 1), 0.0, 0.0, 0, 0, Vector2(0.379121, 0.340659), 0.0, 0.0, 0, 0, Vector2(0.989011, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_wne34"]
 
 [sub_resource type="VoxelGeneratorNoise2D" id="VoxelGeneratorNoise2D_4ljsh"]
 channel = 0
+height_range = 50.0
 noise = SubResource("FastNoiseLite_wne34")
+curve = SubResource("Curve_da0lf")
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_ikji7"]
 library = ExtResource("3_80vek")
@@ -63,7 +69,10 @@ _spawnable_scenes = PackedStringArray("res://player.tscn")
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["terrain"]]
 generator = SubResource("VoxelGeneratorNoise2D_4ljsh")
 mesher = SubResource("VoxelMesherBlocky_ikji7")
+bounds = AABB(-64, -64, -64, 128, 1600, 128)
 mesh_block_size = 32
+
+[node name="VoxelTerrainMultiplayerSynchronizer" type="VoxelTerrainMultiplayerSynchronizer" parent="VoxelTerrain"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8lf10")
