@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://b7p0pxcabf0my"]
+[gd_scene load_steps=73 format=3 uid="uid://b7p0pxcabf0my"]
 
 [ext_resource type="Script" path="res://Scripts/Abilities/hollow_purple.gd" id="1_vpu1a"]
 [ext_resource type="Texture2D" uid="uid://cflml4q1uvnt8" path="res://Assets/Particles/spark_02.png" id="3_20xg7"]
@@ -11,6 +11,7 @@
 [ext_resource type="Shader" path="res://Assets/water_effect2.gdshader" id="10_yhk3w"]
 [ext_resource type="Texture2D" uid="uid://cwjp1fkvygybr" path="res://Assets/WaterDistortion.png" id="11_i2jl7"]
 [ext_resource type="Texture2D" uid="uid://ccu1xgtnrwomo" path="res://Assets/PerlinNoise.png" id="12_cyw4v"]
+[ext_resource type="Script" path="res://Scenes/Abilities/damage_manager.gd" id="13_bkir8"]
 [ext_resource type="Texture2D" uid="uid://dmyujn80gs2h3" path="res://Assets/Particles/flame_04.png" id="13_ldqtf"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ifjcw"]
@@ -752,17 +753,19 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="HollowPurple" type="RigidBody3D" node_paths=PackedStringArray("shapeCast", "animationPlayer")]
+[node name="HollowPurple" type="RigidBody3D" node_paths=PackedStringArray("shapeCast", "animationPlayer", "damageModule")]
 collision_layer = 4
 collision_mask = 4
 gravity_scale = 0.0
 script = ExtResource("1_vpu1a")
 shapeCast = NodePath("ShapeCast3D")
 animationPlayer = NodePath("HollowPurpleAnimations")
+damageModule = NodePath("DamageManager")
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="."]
 shape = SubResource("SphereShape3D_ifjcw")
 target_position = Vector3(0, 0, 0)
+collision_mask = 3
 
 [node name="DeleteTimer" type="Timer" parent="."]
 wait_time = 7.0
@@ -865,6 +868,9 @@ libraries = {
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_mbt0d")
+
+[node name="DamageManager" type="Node" parent="."]
+script = ExtResource("13_bkir8")
 
 [connection signal="timeout" from="DeleteTimer" to="." method="_on_delete_timer_timeout"]
 [connection signal="animation_finished" from="HollowPurpleAnimations" to="." method="_on_hollow_purple_animation_finished"]

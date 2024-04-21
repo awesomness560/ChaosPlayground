@@ -24,9 +24,13 @@ var lockBody : bool = false
 @export var sensVetical : float = 0.5
 
 @export_group("References")
+@export var hudScene : PackedScene
+var hud : CanvasLayer
 @export var firstPersonCamera : Camera3D
 @export var visuals : Node3D
+@export var threeDmodel : Node3D
 @export var characterAnimator : AnimationPlayer
+@export var spawnCamera : SpawnCamera
 #@export var thirdPersonCamera : ThirdPersonCamera
 @export var usernameLabel : Label
 @export_subgroup("Third Person")
@@ -35,8 +39,12 @@ var lockBody : bool = false
 @export_subgroup("Third Person Shoulder")
 @export var thirdPersonShoulderCam : Camera3D
 @export var camMount : Node3D
+@export_subgroup("Modules")
+@export var healthModule : HealthModule
 
 var username : String : set = setUsername
+var initalCollisionLayer : int
+var initialCollisionMask : int
 
 var isGravity : bool = true ##Determines if gravity is enabled
 var isRunning : bool = false
@@ -46,19 +54,54 @@ func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
+	#print("in peer ", multiplayer.get_unique_id(), ", player ", name, " is owned by: ", get_multiplayer_authority())
+	#spawnCamera = GlobalVars.spawnCamera
 	matchCurrentCamera(controlMode)
+	
+	#Make you invisible and untouchable while you respawn
+	initalCollisionLayer = collision_layer
+	initialCollisionMask = collision_mask
+	
+	setCollisionLayer(false)
+	isGravity = false
+	#visuals.hide()
+	
+	#if not MultiplayerManager.players == 1:
+		#rpc("matchCurrentCamera", controlMode)
+	#spawnCamera.setCurrent(self, false)
 	
 	if not is_multiplayer_authority(): return
 	
+	var HUD = hudScene.instantiate()
+	hud = HUD
+	hud.hide()
+	add_child(HUD)
+	
 	#camera.current = true
 	#thirdPersonCamera.current = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	spawnCamera.setCurrent(self, true)
+	#spawnCamera.player = self
+	#spawnCamera.make_current()
 	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 #var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+@rpc("any_peer", "call_local")
+func spawn(spawnPosition : Vector3):
+	healthModule.restoreHealth()
+	global_position = spawnPosition
+	
+	deadState(false)
+	#spawnCamera.setCurrent(self, false)
+	matchCurrentCamera(controlMode)
+	#setCollisionLayer(true)
+	#isGravity = true
+	#visuals.visible = true
+
+@rpc("any_peer", "call_local")
 func matchCurrentCamera(control : ControllerType):
 	controlMode = control
 	
@@ -90,13 +133,13 @@ func _physics_process(delta):
 	
 	match controlMode:
 		ControllerType.FIRST_PERSON:
-			visuals.hide()
+			threeDmodel.hide()
 			firstPersonMovment(delta)
 		ControllerType.THIRD_PERSON:
-			visuals.show()
+			threeDmodel.show()
 			thirdPersonMovement(delta)
 		ControllerType.THIRD_PERSON_SHOULDER:
-			visuals.show()
+			threeDmodel.show()
 			thirdPersonShoulderMovement(delta)
 
 func _process(delta):
@@ -225,3 +268,24 @@ func firstPersonMovment(delta):
 
 func setUsername(userName : String):
 	usernameLabel.text = userName
+
+
+func _on_health_module_died():
+	if is_multiplayer_authority():
+		deadState(true)
+
+func deadState(state : bool):
+	spawnCamera.setCurrent(self, state)
+	setCollisionLayer(not state)
+	isGravity = not state
+	visuals.visible = not state
+	if is_multiplayer_authority():
+		hud.visible = not state
+
+func setCollisionLayer(state : bool):
+	if state:
+		collision_layer = initalCollisionLayer
+		collision_mask = initialCollisionMask
+	else:
+		collision_layer = 0
+		collision_mask = 0

@@ -1,40 +1,15 @@
-[gd_scene load_steps=15 format=3 uid="uid://br01chminlckq"]
+[gd_scene load_steps=17 format=3 uid="uid://br01chminlckq"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody3D.gd" id="1_502fm"]
 [ext_resource type="Script" path="res://Scripts/Abilities/ability_manager.gd" id="2_c20k6"]
 [ext_resource type="Material" uid="uid://b12hlj4bxcqdb" path="res://Materials/playerSeeThrough.tres" id="2_x4883"]
 [ext_resource type="Script" path="res://Scripts/player_camera.gd" id="3_amtfd"]
 [ext_resource type="PackedScene" uid="uid://p5xn7u35fs4r" path="res://Scenes/Abilities/hollow_purple_launcher.tscn" id="4_qr7rt"]
-[ext_resource type="Texture2D" uid="uid://ew77ki5612h2" path="res://Assets/circle-32.png" id="6_k4mi5"]
 [ext_resource type="Script" path="res://Scripts/third_person_camera.gd" id="8_5iau8"]
 [ext_resource type="PackedScene" uid="uid://y8i3mjchtfs5" path="res://Scenes/Visuals/main_character.tscn" id="8_pumas"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4ipxv"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("FirstPersonCamera:rotation")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath("Visuals:rotation")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath("CameraMount:rotation")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath("Visuals/MainCharacter/AnimationPlayer:current_animation")
-properties/5/spawn = true
-properties/5/replication_mode = 1
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ua1y4"]
-radius = 0.783179
-height = 4.38927
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_23jgk"]
-viewport_path = NodePath("AboveHead/SubViewport")
+[ext_resource type="PackedScene" uid="uid://d1b16gqb42bv6" path="res://Scenes/Player/hud.tscn" id="9_mtpk3"]
+[ext_resource type="Script" path="res://Scripts/Modules/health_module.gd" id="10_icsec"]
+[ext_resource type="PackedScene" uid="uid://da3xpdwuyxm0p" path="res://Scenes/Mapa/map_camera.tscn" id="11_8ulp4"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_dlk0p"]
 material = ExtResource("2_x4883")
@@ -45,7 +20,37 @@ albedo_color = Color(0, 0, 0, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_1fh3h"]
 material = SubResource("StandardMaterial3D_fbmt0")
 
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("firstPersonCamera", "visuals", "characterAnimator", "usernameLabel", "thirdPersonCamera", "springArm", "thirdPersonShoulderCam", "camMount")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_23jgk"]
+viewport_path = NodePath("Visuals/AboveHead/SubViewport")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ua1y4"]
+radius = 0.783179
+height = 4.38927
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4ipxv"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Visuals:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Visuals/MainCharacter/AnimationPlayer:current_animation")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+properties/4/path = NodePath("Cameras/FirstPersonCamera:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("HealthModule:health")
+properties/5/spawn = true
+properties/5/replication_mode = 2
+properties/6/path = NodePath("Visuals:visible")
+properties/6/spawn = true
+properties/6/replication_mode = 2
+
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("firstPersonCamera", "visuals", "threeDmodel", "characterAnimator", "spawnCamera", "usernameLabel", "thirdPersonCamera", "springArm", "thirdPersonShoulderCam", "camMount", "healthModule") groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.932028, 0)
 collision_layer = 2
 script = ExtResource("1_502fm")
@@ -53,96 +58,18 @@ gravity = 20.0
 offsetThirdPerson = Vector3(0, 3.3, 0)
 sensHorizontal = 0.2
 sensVetical = 0.2
-firstPersonCamera = NodePath("FirstPersonCamera")
+hudScene = ExtResource("9_mtpk3")
+firstPersonCamera = NodePath("Cameras/FirstPersonCamera")
 visuals = NodePath("Visuals")
+threeDmodel = NodePath("Visuals/MainCharacter")
 characterAnimator = NodePath("Visuals/MainCharacter/AnimationPlayer")
-usernameLabel = NodePath("AboveHead/SubViewport/Username")
-thirdPersonCamera = NodePath("ThirdPerson/ThirdPersonCamera")
-springArm = NodePath("ThirdPerson")
-thirdPersonShoulderCam = NodePath("CameraMount/SpringArm3D/Camera3D")
-camMount = NodePath("CameraMount")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_4ipxv")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.023737, 1.16589, -0.00927365)
-shape = SubResource("CapsuleShape3D_ua1y4")
-
-[node name="FirstPersonCamera" type="Camera3D" parent="."]
-transform = Transform3D(0.999957, 2.99753e-05, -0.00928451, 0, 0.999995, 0.00322851, 0.00928456, -0.00322837, 0.999952, 0.00895208, 3.07948, -0.0949779)
-current = true
-fov = 85.0
-script = ExtResource("3_amtfd")
-
-[node name="AbilityManager" type="Node3D" parent="FirstPersonCamera" node_paths=PackedStringArray("camera", "player", "playerVisuals")]
-transform = Transform3D(0.999957, 1.81899e-12, 0.00928456, 2.99753e-05, 0.999995, -0.00322837, -0.00928451, 0.00322851, 0.999952, 0.0715604, -0.0304435, 0.27612)
-script = ExtResource("2_c20k6")
-camera = NodePath("..")
-player = NodePath("../..")
-playerVisuals = NodePath("../../Visuals")
-
-[node name="HollowPurpleLauncher" parent="FirstPersonCamera/AbilityManager" instance=ExtResource("4_qr7rt")]
-
-[node name="TextureRect" type="TextureRect" parent="FirstPersonCamera"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 24.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("6_k4mi5")
-
-[node name="AboveHead" type="Sprite3D" parent="."]
-transform = Transform3D(1.77, 0, 0, 0, 1.77, 0, 0, 0, 1.77, 0, 5.53385, 0)
-sorting_offset = 1.0
-flip_h = true
-no_depth_test = true
-texture = SubResource("ViewportTexture_23jgk")
-
-[node name="SubViewport" type="SubViewport" parent="AboveHead"]
-size = Vector2i(200, 50)
-
-[node name="Username" type="Label" parent="AboveHead/SubViewport"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -45.0
-offset_top = -11.5
-offset_right = 45.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "SomeName"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ThirdPerson" type="SpringArm3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.088474, 1.49913, 0)
-spring_length = 7.0
-margin = 0.2
-script = ExtResource("8_5iau8")
-
-[node name="ThirdPersonCamera" type="Camera3D" parent="ThirdPerson"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.4263)
-
-[node name="CameraMount" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-
-[node name="SpringArm3D" type="SpringArm3D" parent="CameraMount"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.01111, 1.47838, 0)
-spring_length = 7.0
-margin = 0.2
-
-[node name="Camera3D" type="Camera3D" parent="CameraMount/SpringArm3D"]
+spawnCamera = NodePath("Cameras/MapCamera")
+usernameLabel = NodePath("Visuals/AboveHead/SubViewport/Username")
+thirdPersonCamera = NodePath("Cameras/ThirdPerson/ThirdPersonCamera")
+springArm = NodePath("Cameras/ThirdPerson")
+thirdPersonShoulderCam = NodePath("Cameras/CameraMount/SpringArm3D/Camera3D")
+camMount = NodePath("Cameras/CameraMount")
+healthModule = NodePath("HealthModule")
 
 [node name="Visuals" type="Node3D" parent="."]
 
@@ -246,5 +173,84 @@ bones/60/rotation = Quaternion(-0.0902664, -0.0167302, 0.995415, -0.0268558)
 bones/61/rotation = Quaternion(-0.0740945, 0.0840275, -0.0245553, 0.993401)
 bones/62/rotation = Quaternion(0.56544, 0.0113454, -0.00851599, 0.824668)
 bones/63/rotation = Quaternion(0.289085, 0.0318906, 0.0140794, 0.956668)
+
+[node name="AboveHead" type="Sprite3D" parent="Visuals"]
+transform = Transform3D(1.77, 0, 0, 0, 1.77, 0, 0, 0, 1.77, 0, 5.53385, 0)
+visible = false
+sorting_offset = 1.0
+flip_h = true
+no_depth_test = true
+texture = SubResource("ViewportTexture_23jgk")
+
+[node name="SubViewport" type="SubViewport" parent="Visuals/AboveHead"]
+size = Vector2i(200, 50)
+
+[node name="Username" type="Label" parent="Visuals/AboveHead/SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -11.5
+offset_right = 45.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "SomeName"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Cameras" type="Node3D" parent="."]
+
+[node name="FirstPersonCamera" type="Camera3D" parent="Cameras"]
+transform = Transform3D(0.999957, 2.99753e-05, -0.00928451, 0, 0.999995, 0.00322851, 0.00928456, -0.00322837, 0.999952, 0.00895208, 3.07948, -0.0949779)
+current = true
+fov = 85.0
+script = ExtResource("3_amtfd")
+
+[node name="AbilityManager" type="Node3D" parent="Cameras/FirstPersonCamera" node_paths=PackedStringArray("camera", "player", "playerVisuals")]
+transform = Transform3D(0.999957, 1.81899e-12, 0.00928456, 2.99753e-05, 0.999995, -0.00322837, -0.00928451, 0.00322851, 0.999952, 0.0715604, -0.0304435, 0.27612)
+script = ExtResource("2_c20k6")
+camera = NodePath("..")
+player = NodePath("../../..")
+playerVisuals = NodePath("../../../Visuals")
+
+[node name="HollowPurpleLauncher" parent="Cameras/FirstPersonCamera/AbilityManager" instance=ExtResource("4_qr7rt")]
+
+[node name="ThirdPerson" type="SpringArm3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.088474, 1.49913, 0)
+spring_length = 7.0
+margin = 0.2
+script = ExtResource("8_5iau8")
+
+[node name="ThirdPersonCamera" type="Camera3D" parent="Cameras/ThirdPerson"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.4263)
+
+[node name="CameraMount" type="Node3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Cameras/CameraMount"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.01111, 1.47838, 0)
+spring_length = 7.0
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="Cameras/CameraMount/SpringArm3D"]
+
+[node name="MapCamera" parent="Cameras" instance=ExtResource("11_8ulp4")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 73.1443, 0)
+top_level = true
+
+[node name="HealthModule" type="Node" parent="."]
+script = ExtResource("10_icsec")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.023737, 1.16589, -0.00927365)
+shape = SubResource("CapsuleShape3D_ua1y4")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_4ipxv")
+
+[connection signal="Died" from="HealthModule" to="." method="_on_health_module_died"]
 
 [editable path="Visuals/MainCharacter"]

@@ -1,13 +1,13 @@
-res://main_scene.tscn
+res://player.tscn
 res://Materials/playerSeeThrough.tres
 res://Assets/water_effect2.gdshader
 res://Resources/blocky_lib.tres
 res://Assets/meshBlocks.tres
 res://Assets/water_effect.gdshader
-res://player.tscn
 res://Scenes/lobby.tscn
 res://Scenes/multiplayer_ui.tscn
 res://Scenes/block_grid.tscn
+res://main_scene.tscn
 res://Scenes/Abilities/hollow_purple.tscn
 res://Scenes/Steam/main.tscn
 res://Scenes/Steam/level.tscn
@@ -15,3 +15,9 @@ res://Scenes/test_world.tscn
 res://Scenes/Abilities/hollow_purple_launcher.tscn
 res://Scenes/Visuals/main_character.tscn
 res://Scenes/Autoloads/multiplayer_manager.tscn
+res://Scenes/Modules/health_bar.tscn
+res://Scenes/Player/hud.tscn
+res://Scripts/World/spawn_camera.gd
+res://Scripts/CharacterBody3D.gd
+res://Scripts/Abilities/hollow_purple.gd
+res://Scripts/Modules/health_module.gd

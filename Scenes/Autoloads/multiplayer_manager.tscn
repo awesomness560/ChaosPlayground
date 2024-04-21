@@ -1,8 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bju0nqocqljkg"]
+[gd_scene load_steps=4 format=3 uid="uid://bju0nqocqljkg"]
 
 [ext_resource type="Script" path="res://Scripts/Autoloads/multiplayer_manager.gd" id="1_s7bm2"]
 [ext_resource type="PackedScene" uid="uid://br01chminlckq" path="res://player.tscn" id="2_evgti"]
+[ext_resource type="PackedScene" uid="uid://da3xpdwuyxm0p" path="res://Scenes/Mapa/map_camera.tscn" id="3_4n5vi"]
 
 [node name="MultiplayerManager" type="Node"]
 script = ExtResource("1_s7bm2")
 player = ExtResource("2_evgti")
+mapCamera = ExtResource("3_4n5vi")

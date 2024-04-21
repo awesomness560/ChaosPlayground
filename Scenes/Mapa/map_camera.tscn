@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://da3xpdwuyxm0p"]
+
+[ext_resource type="Script" path="res://Scripts/World/spawn_camera.gd" id="1_8xu85"]
+
+[node name="MapCamera" type="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 72.2123, 0)
+script = ExtResource("1_8xu85")

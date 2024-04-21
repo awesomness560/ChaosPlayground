@@ -2,7 +2,9 @@ extends Node
 
 #enum connectionType{SERVER, CLIENT}
 @export var player : PackedScene
+@export var mapCamera : PackedScene
 
+var players : int = 0
 var mainCharacterSpawned : bool = false
 
 func _ready():
@@ -21,10 +23,11 @@ func connectPlayer(peer_id):
 	
 	var player := player.instantiate()
 	player.name = str(peer_id)
-	player.global_position.y += 80
+	#player.global_position = Vector3(200, 200, 200)
 	
 	add_child(player)
 	player.add_child(voxelViewer)
+	players += 1
 	
 	return player
 
