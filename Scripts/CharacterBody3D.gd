@@ -25,7 +25,7 @@ var lockBody : bool = false
 
 @export_group("References")
 @export var hudScene : PackedScene
-var hud : CanvasLayer
+var hud : HUD
 @export var firstPersonCamera : Camera3D
 @export var visuals : Node3D
 @export var threeDmodel : Node3D
@@ -92,7 +92,7 @@ func _ready():
 @rpc("any_peer", "call_local")
 func spawn(spawnPosition : Vector3):
 	healthModule.restoreHealth()
-	global_position = spawnPosition
+	global_position = spawnPosition #TODO: I can put the spawn animation here
 	
 	deadState(false)
 	#spawnCamera.setCurrent(self, false)

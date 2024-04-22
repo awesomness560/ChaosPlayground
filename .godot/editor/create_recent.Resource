@@ -1,2 +1,4 @@
+HollowPurpleResource
+BaseAbilityResource
 VoxelBlockyLibrary
 StandardMaterial3D

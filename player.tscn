@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/Abilities/ability_manager.gd" id="2_c20k6"]
 [ext_resource type="Material" uid="uid://b12hlj4bxcqdb" path="res://Materials/playerSeeThrough.tres" id="2_x4883"]
 [ext_resource type="Script" path="res://Scripts/player_camera.gd" id="3_amtfd"]
-[ext_resource type="PackedScene" uid="uid://p5xn7u35fs4r" path="res://Scenes/Abilities/hollow_purple_launcher.tscn" id="4_qr7rt"]
+[ext_resource type="Resource" uid="uid://dg8n8figmoq21" path="res://Resources/Abilities/hollow_purple.tres" id="6_i7tg1"]
 [ext_resource type="Script" path="res://Scripts/third_person_camera.gd" id="8_5iau8"]
 [ext_resource type="PackedScene" uid="uid://y8i3mjchtfs5" path="res://Scenes/Visuals/main_character.tscn" id="8_pumas"]
 [ext_resource type="PackedScene" uid="uid://d1b16gqb42bv6" path="res://Scenes/Player/hud.tscn" id="9_mtpk3"]
@@ -49,6 +49,9 @@ properties/5/replication_mode = 2
 properties/6/path = NodePath("Visuals:visible")
 properties/6/spawn = true
 properties/6/replication_mode = 2
+properties/7/path = NodePath("AbilityManager:currentAbilityIndex")
+properties/7/spawn = true
+properties/7/replication_mode = 2
 
 [node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("firstPersonCamera", "visuals", "threeDmodel", "characterAnimator", "spawnCamera", "usernameLabel", "thirdPersonCamera", "springArm", "thirdPersonShoulderCam", "camMount", "healthModule") groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.932028, 0)
@@ -201,6 +204,14 @@ text = "SomeName"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="AbilityManager" type="Node3D" parent="." node_paths=PackedStringArray("camera", "player", "playerVisuals")]
+transform = Transform3D(0.999957, 2.99753e-05, -0.00928451, 0, 0.999995, 0.00322851, 0.00928456, -0.00322837, 0.999952, 0.00895208, 3.07948, -0.0949779)
+script = ExtResource("2_c20k6")
+camera = NodePath("../Cameras/FirstPersonCamera")
+player = NodePath("..")
+playerVisuals = NodePath("../Visuals")
+hollowPurpleResource = ExtResource("6_i7tg1")
+
 [node name="Cameras" type="Node3D" parent="."]
 
 [node name="FirstPersonCamera" type="Camera3D" parent="Cameras"]
@@ -209,14 +220,8 @@ current = true
 fov = 85.0
 script = ExtResource("3_amtfd")
 
-[node name="AbilityManager" type="Node3D" parent="Cameras/FirstPersonCamera" node_paths=PackedStringArray("camera", "player", "playerVisuals")]
-transform = Transform3D(0.999957, 1.81899e-12, 0.00928456, 2.99753e-05, 0.999995, -0.00322837, -0.00928451, 0.00322851, 0.999952, 0.0715604, -0.0304435, 0.27612)
-script = ExtResource("2_c20k6")
-camera = NodePath("..")
-player = NodePath("../../..")
-playerVisuals = NodePath("../../../Visuals")
-
-[node name="HollowPurpleLauncher" parent="Cameras/FirstPersonCamera/AbilityManager" instance=ExtResource("4_qr7rt")]
+[node name="AbilityManagerRemoteTransform" type="RemoteTransform3D" parent="Cameras/FirstPersonCamera"]
+remote_path = NodePath("../../../AbilityManager")
 
 [node name="ThirdPerson" type="SpringArm3D" parent="Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.088474, 1.49913, 0)

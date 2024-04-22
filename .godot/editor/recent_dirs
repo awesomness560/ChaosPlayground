@@ -1,13 +1,17 @@
+res://Scenes/Player
+res://Scripts/Player
+res://Scenes/Abilities
+res://Assets/Shaders
+res://Scripts/BaseClasses
+res://Resources/Abilities
 res://Scenes/Mapa
 res://Scenes/Autoloads
 res://Scripts/World
-res://Scenes/Player
 res://Scripts/Modules
 res://Scenes/Modules
 res://Resources/
 res://Assets/Characters
 res://Scenes/Visuals
-res://Scenes/Abilities
 res://Scripts
 res://addons
 res://
@@ -16,4 +20,3 @@ res://Scenes
 res://Scripts/Steam
 res://Assets
 res://Materials
-res://Scripts/Abilities

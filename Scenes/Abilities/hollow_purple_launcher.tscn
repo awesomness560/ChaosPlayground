@@ -3,10 +3,13 @@
 [ext_resource type="Script" path="res://Scripts/Abilities/hollow_purple_launcher.gd" id="1_g7186"]
 [ext_resource type="PackedScene" uid="uid://b7p0pxcabf0my" path="res://Scenes/Abilities/hollow_purple.tscn" id="2_by0ga"]
 
-[node name="HollowPurpleLauncher" type="Node3D"]
+[node name="HollowPurpleLauncher" type="Node3D" node_paths=PackedStringArray("cooldownTimer")]
 transform = Transform3D(1, -7.23783e-25, 0, -1.56125e-17, 1, 5.55112e-17, 0, -5.55112e-17, 1, -0.128133, 0, -8.547)
 script = ExtResource("1_g7186")
 projectile = ExtResource("2_by0ga")
+cooldownTimer = NodePath("Cooldown")
 
 [node name="Cooldown" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]

@@ -1,3 +1,10 @@
+PanelContainer
+Control
+MarginContainer
+AspectRatioContainer
+HBoxContainer
+TextureRect
+RemoteTransform3D
 Camera3D
 Node
 Node3D
@@ -6,9 +13,3 @@ ProgressBar
 CanvasLayer
 VoxelTerrainMultiplayerSynchronizer
 VoxelTerrain
-VoxelViewer
-StaticBody3D
-CollisionShape3D
-MeshInstance3D
-SpringArm3D
-CharacterBody3D
