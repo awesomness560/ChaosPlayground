@@ -1,4 +1,4 @@
-extends Node
+extends MultiplayerSpawner
 
 #enum connectionType{SERVER, CLIENT}
 @export var player : PackedScene
@@ -8,7 +8,13 @@ var players : int = 0
 var mainCharacterSpawned : bool = false
 
 func _ready():
-	pass
+	spawn_function = connectPlayer
+
+func startGame():
+	if is_multiplayer_authority():
+		spawn(1)
+		multiplayer.peer_connected.connect(spawn)
+		multiplayer.peer_disconnected.connect(removePlayer)
 
 func connectPlayer(peer_id):
 	var voxelViewer : VoxelViewer = VoxelViewer.new()

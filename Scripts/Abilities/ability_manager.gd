@@ -31,6 +31,8 @@ func _process(delta):
 	pass
 
 func _unhandled_input(event):
+	var abilitiesSize : int = abilities.size()
+	
 	if event.is_action_pressed("changeActiveAbilityLeft") and not isLocked and player.is_multiplayer_authority():
 		if currentAbilityIndex > 0:
 			rpc("setAbilityActive", currentAbilityIndex - 1)
@@ -41,7 +43,7 @@ func _unhandled_input(event):
 			#setAbilityActive(abilities.size() - 1)
 			currentAbilityIndex = abilities.size() - 1
 	
-	if event.is_action_pressed("changeActiveAbilityRight") and not isLocked and player.is_multiplayer_authority():
+	elif event.is_action_pressed("changeActiveAbilityRight") and not isLocked and player.is_multiplayer_authority():
 		if currentAbilityIndex < abilities.size() - 1:
 			rpc("setAbilityActive", currentAbilityIndex + 1)
 			#setAbilityActive(currentAbilityIndex + 1)
@@ -50,6 +52,34 @@ func _unhandled_input(event):
 			rpc("setAbilityActive", 0)
 			#setAbilityActive(0)
 			currentAbilityIndex = 0
+	
+	elif event.is_action_pressed("Hotbar Slot 1") and not abilities.is_empty():
+		rpc("setAbilityActive", 0)
+		currentAbilityIndex = 0
+	elif event.is_action_pressed("Hotbar Slot 2") and abilitiesSize >= 2:
+		rpc("setAbilityActive", 1)
+		currentAbilityIndex = 1
+	elif event.is_action_pressed("Hotbar Slot 3") and abilitiesSize >= 3:
+		rpc("setAbilityActive", 2)
+		currentAbilityIndex = 2
+	elif event.is_action_pressed("Hotbar Slot 4") and abilitiesSize >= 4:
+		rpc("setAbilityActive", 3)
+		currentAbilityIndex = 3
+	elif event.is_action_pressed("Hotbar Slot 5") and abilitiesSize >= 5:
+		rpc("setAbilityActive", 4)
+		currentAbilityIndex = 4
+	elif event.is_action_pressed("Hotbar Slot 6") and abilitiesSize >= 6:
+		rpc("setAbilityActive", 5)
+		currentAbilityIndex = 5
+	elif event.is_action_pressed("Hotbar Slot 7") and abilitiesSize >= 7:
+		rpc("setAbilityActive", 6)
+		currentAbilityIndex = 6
+	elif event.is_action_pressed("Hotbar Slot 8") and abilitiesSize >= 8:
+		rpc("setAbilityActive", 7)
+		currentAbilityIndex = 7
+	elif event.is_action_pressed("Hotbar Slot 9") and abilitiesSize >= 9:
+		rpc("setAbilityActive", 8)
+		currentAbilityIndex = 8
 
 @rpc("any_peer", "call_local")
 func setAbilityActive(index : int):

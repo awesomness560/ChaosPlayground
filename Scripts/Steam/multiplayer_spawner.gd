@@ -4,12 +4,14 @@ extends MultiplayerSpawner
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	spawn_function = spawnPlayer
+
+var players : Dictionary = {}
+
+func startGame():
 	if is_multiplayer_authority():
 		spawn(1)
 		multiplayer.peer_connected.connect(spawn)
 		multiplayer.peer_disconnected.connect(removePlayer)
-
-var players : Dictionary = {}
 
 func spawnPlayer(data):
 	#var p = playerScene.instantiate()

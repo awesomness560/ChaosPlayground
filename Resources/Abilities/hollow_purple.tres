@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://Resources/Abilities/Scripts/hollow_purple_resource.gd" id="1_23dmp"]
 [ext_resource type="PackedScene" uid="uid://p5xn7u35fs4r" path="res://Scenes/Abilities/hollow_purple_launcher.tscn" id="1_ivtae"]
-[ext_resource type="Texture2D" uid="uid://cmbha1i0m4hjm" path="res://Assets/Icons/hollowPurple.png" id="2_5fgl0"]
+[ext_resource type="Texture2D" uid="uid://cmbha1i0m4hjm" path="res://Assets/Icons/hollowPurple.png" id="2_v4vi4"]
 
 [resource]
 script = ExtResource("1_23dmp")
 speed = 30
 damage = 20
 abilityScene = ExtResource("1_ivtae")
-icon = ExtResource("2_5fgl0")
+icon = ExtResource("2_v4vi4")
 cooldown = 3.0

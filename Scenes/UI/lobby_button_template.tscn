@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://3h6hoqewgui8"]
+
+[node name="LobbyButtonTemplate" type="Button"]
+text = "Awesomness560's Lobby"

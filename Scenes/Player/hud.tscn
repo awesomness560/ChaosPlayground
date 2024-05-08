@@ -1,59 +1,157 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1b16gqb42bv6"]
+[gd_scene load_steps=13 format=3 uid="uid://d1b16gqb42bv6"]
 
 [ext_resource type="PackedScene" uid="uid://kwsokqernedg" path="res://Scenes/Modules/health_bar.tscn" id="1_663go"]
 [ext_resource type="Script" path="res://Scripts/Player/hud.gd" id="1_hpugf"]
 [ext_resource type="Texture2D" uid="uid://ew77ki5612h2" path="res://Assets/circle-32.png" id="2_f5672"]
 [ext_resource type="PackedScene" uid="uid://c7rseh1u8jvhd" path="res://Scenes/Abilities/ability_container.tscn" id="2_rgujw"]
 [ext_resource type="PackedScene" uid="uid://cf1ixy2ebpht3" path="res://Scenes/Player/spacer.tscn" id="5_q85ee"]
+[ext_resource type="Script" path="res://Scripts/UI/menu.gd" id="6_8vo24"]
+[ext_resource type="Script" path="res://Scripts/UI/menu_button.gd" id="7_h3dbd"]
+[ext_resource type="PackedScene" uid="uid://bhx4d6qk5ljqv" path="res://Scenes/UI/settings.tscn" id="8_8o5kt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yjjr1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bh1x6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2m0x"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3ldxc"]
 
-[node name="Hud" type="CanvasLayer" node_paths=PackedStringArray("abilityContainer")]
+[node name="Hud" type="CanvasLayer" node_paths=PackedStringArray("abilityContainer", "sessionIDButton", "healthBar", "pauseMenu", "normalHUD")]
 script = ExtResource("1_hpugf")
 abilityTemplate = ExtResource("2_rgujw")
-abilityContainer = NodePath("Hotbar/AbilitiesContainer")
+abilityContainer = NodePath("NormalHUD/Hotbar/AbilitiesContainer")
+sessionIDButton = NodePath("PauseMenu/CopySessionID")
+healthBar = NodePath("NormalHUD/HealthBar")
+pauseMenu = NodePath("PauseMenu")
+normalHUD = NodePath("NormalHUD")
 
-[node name="HealthBar" parent="." instance=ExtResource("1_663go")]
-offset_left = 32.0
-offset_top = 17.0
-offset_right = 408.0
-offset_bottom = 62.0
+[node name="PauseMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="MainPauseMenu" type="VBoxContainer" parent="PauseMenu"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 24.0
-offset_bottom = 24.0
+offset_left = -89.0
+offset_top = -119.0
+offset_right = 89.0
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("6_8vo24")
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/MainPauseMenu"]
+layout_mode = 2
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="PauseMenu/MainPauseMenu" node_paths=PackedStringArray("menuToSwitch")]
+layout_mode = 2
+text = "Settings"
+script = ExtResource("7_h3dbd")
+menuToSwitch = NodePath("../../Settings")
+hoverScale = 1.0
+
+[node name="Disconnect" type="Button" parent="PauseMenu/MainPauseMenu"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Disconnect"
+
+[node name="Background" type="ColorRect" parent="PauseMenu"]
+z_index = -3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.219608, 0.219608, 0.219608, 0.560784)
+
+[node name="CopySessionID" type="Button" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -54.5
+offset_right = 54.5
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_yjjr1")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_bh1x6")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_s2m0x")
+text = "Join Code: 19248091234 (Press to copy)"
+
+[node name="Settings" parent="PauseMenu" instance=ExtResource("8_8o5kt")]
+visible = false
+layout_mode = 1
+
+[node name="NormalHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthBar" parent="NormalHUD" instance=ExtResource("1_663go")]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 17.0
+offset_right = 408.0
+offset_bottom = 62.0
+
+[node name="Crosshair" type="TextureRect" parent="NormalHUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
+mouse_filter = 2
 texture = ExtResource("2_f5672")
 
-[node name="Hotbar" type="PanelContainer" parent="."]
-anchors_preset = -1
-anchor_left = 0.073
-anchor_top = 0.775
-anchor_right = 0.895
-anchor_bottom = 0.944
-offset_left = -0.0960083
-offset_top = -0.200012
-offset_right = -0.0400391
-offset_bottom = 0.287964
+[node name="Hotbar" type="PanelContainer" parent="NormalHUD"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 101.0
+offset_top = -150.0
+offset_right = -101.0
+offset_bottom = -33.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3ldxc")
 
-[node name="AbilitiesContainer" type="HBoxContainer" parent="Hotbar"]
+[node name="AbilitiesContainer" type="HBoxContainer" parent="NormalHUD/Hotbar"]
 layout_mode = 2
 alignment = 1
 
-[node name="Spacer" parent="Hotbar/AbilitiesContainer" instance=ExtResource("5_q85ee")]
+[node name="Spacer" parent="NormalHUD/Hotbar/AbilitiesContainer" instance=ExtResource("5_q85ee")]
 layout_mode = 2
 
-[node name="Spacer2" parent="Hotbar/AbilitiesContainer" instance=ExtResource("5_q85ee")]
+[node name="Spacer2" parent="NormalHUD/Hotbar/AbilitiesContainer" instance=ExtResource("5_q85ee")]
 layout_mode = 2
+
+[connection signal="pressed" from="PauseMenu/MainPauseMenu/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/MainPauseMenu/Disconnect" to="." method="_on_disconnect_pressed"]
+[connection signal="pressed" from="PauseMenu/CopySessionID" to="." method="_on_copy_session_id_pressed"]

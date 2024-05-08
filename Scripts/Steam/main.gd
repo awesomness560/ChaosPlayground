@@ -4,9 +4,10 @@ var lobbyId : int = 0
 var peer : SteamMultiplayerPeer = SteamMultiplayerPeer.new()
 @export_file() var mainLevel : String
 
-@onready var ms = $MultiplayerSpawner
+@export var ms : MultiplayerSpawner
 
 @export var vBox : VBoxContainer
+@export var steamNode : Node
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	ms.spawn_function = spawnLevel

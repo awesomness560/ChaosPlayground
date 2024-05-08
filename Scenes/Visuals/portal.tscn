@@ -1,0 +1,77 @@
+[gd_scene load_steps=13 format=3 uid="uid://bn8bm7rlxatn0"]
+
+[ext_resource type="Shader" uid="uid://cbqh07d5bp7qo" path="res://Assets/Shaders/portal_shader.tres" id="1_6c4gg"]
+[ext_resource type="Texture2D" uid="uid://crfmkigahigc5" path="res://Assets/Portal/T_VFX_lelu1_tiled.png" id="2_s8oan"]
+[ext_resource type="Texture2D" uid="uid://cw0vb1lojyo1n" path="res://Assets/Particles/flare_01.png" id="3_0oovw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fiwpx"]
+render_priority = 0
+shader = ExtResource("1_6c4gg")
+shader_parameter/Color_Intensity = 20.0
+shader_parameter/Portal_Color = Color(0, 0.309442, 0.77376, 1)
+shader_parameter/Speed_X_Y = Vector2(-0.3, 0.3)
+shader_parameter/Portal_Texture = ExtResource("2_s8oan")
+
+[sub_resource type="QuadMesh" id="QuadMesh_aiaxs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_of6vd"]
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0, 1.914, 2.784, 1)
+albedo_texture = ExtResource("3_0oovw")
+use_particle_trails = true
+
+[sub_resource type="Curve" id="Curve_ohpop"]
+min_value = -2.0
+max_value = 2.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_j8yqk"]
+min_value = -2.0
+max_value = 2.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_qkqo0"]
+min_value = -2.0
+max_value = 2.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_os7ok"]
+curve_x = SubResource("Curve_ohpop")
+curve_y = SubResource("Curve_j8yqk")
+curve_z = SubResource("Curve_qkqo0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bk56u"]
+emission_shape = 6
+emission_ring_axis = Vector3(2.08165e-12, 2.08165e-12, 1)
+emission_ring_height = 2.08165e-12
+emission_ring_radius = 1.2
+emission_ring_inner_radius = 1.2
+orbit_velocity_max = 0.2
+orbit_velocity_curve = SubResource("CurveXYZTexture_os7ok")
+radial_velocity_min = 0.2
+radial_velocity_max = 0.2
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_dyxra"]
+size = 0.2
+
+[node name="Portal" type="Node3D"]
+
+[node name="PortalMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_fiwpx")
+mesh = SubResource("QuadMesh_aiaxs")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.749534, 0, -0.661966, 0, 1, 0, 0.661966, 0, 0.749534, 0.0449878, 0, 0)
+material_override = SubResource("StandardMaterial3D_of6vd")
+amount = 150
+trail_enabled = true
+trail_lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_bk56u")
+draw_pass_1 = SubResource("RibbonTrailMesh_dyxra")

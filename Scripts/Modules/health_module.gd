@@ -15,8 +15,8 @@ var dead : bool = false
 func _ready():
 	await get_parent().ready
 	
-	if get_parent().is_multiplayer_authority():
-		healthBar = get_parent().get_node_or_null("Hud").get_node("HealthBar")
+	if get_parent().is_multiplayer_authority(): #HACK: Please find a better way to do this (get_parent)
+		healthBar = get_parent().get_node_or_null("Hud").healthBar
 	
 	health = maxHealth
 	if healthBar:

@@ -4,7 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://br01chminlckq" path="res://player.tscn" id="2_evgti"]
 [ext_resource type="PackedScene" uid="uid://da3xpdwuyxm0p" path="res://Scenes/Mapa/map_camera.tscn" id="3_4n5vi"]
 
-[node name="MultiplayerManager" type="Node"]
+[node name="MultiplayerManager" type="MultiplayerSpawner"]
+spawn_path = NodePath(".")
 script = ExtResource("1_s7bm2")
 player = ExtResource("2_evgti")
 mapCamera = ExtResource("3_4n5vi")

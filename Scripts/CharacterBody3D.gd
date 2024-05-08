@@ -49,6 +49,7 @@ var initialCollisionMask : int
 var isGravity : bool = true ##Determines if gravity is enabled
 var isRunning : bool = false
 var isInAir : bool = false
+var isPaused : bool = false
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
@@ -115,7 +116,7 @@ func matchCurrentCamera(control : ControllerType):
 			thirdPersonShoulderCam.current = is_multiplayer_authority()
 
 func _input(event):
-	if not is_multiplayer_authority(): return
+	if not is_multiplayer_authority() or isPaused: return
 	
 	match controlMode:
 		ControllerType.FIRST_PERSON:
@@ -131,16 +132,22 @@ func _input(event):
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
 	
-	match controlMode:
-		ControllerType.FIRST_PERSON:
-			threeDmodel.hide()
-			firstPersonMovment(delta)
-		ControllerType.THIRD_PERSON:
-			threeDmodel.show()
-			thirdPersonMovement(delta)
-		ControllerType.THIRD_PERSON_SHOULDER:
-			threeDmodel.show()
-			thirdPersonShoulderMovement(delta)
+	if not is_on_floor() and isGravity:
+		velocity.y -= gravity * delta
+	
+	if not isPaused:
+		match controlMode:
+			ControllerType.FIRST_PERSON:
+				threeDmodel.hide()
+				firstPersonMovment(delta)
+			ControllerType.THIRD_PERSON:
+				threeDmodel.show()
+				thirdPersonMovement(delta)
+			ControllerType.THIRD_PERSON_SHOULDER:
+				threeDmodel.show()
+				thirdPersonShoulderMovement(delta)
+	
+	move_and_slide()
 
 func _process(delta):
 	springArm.position = position + offsetThirdPerson
@@ -195,10 +202,10 @@ func thirdPersonMovement(delta):
 	
 	velocity.x = moveDirection.x * SPEED
 	velocity.z = moveDirection.z * SPEED
-	if isGravity:
-		velocity.y -= gravity * delta
-	elif not velocity.y < 0:
-		velocity.y -= gravity * delta
+	#if isGravity:
+		#velocity.y -= gravity * delta
+	#elif not velocity.y < 0:
+		#velocity.y -= gravity * delta
 	
 	var justLanded : bool = is_on_floor() and snapVector == Vector3.ZERO
 	var isJumping : bool = is_on_floor() and Input.is_action_just_pressed("jump")
@@ -208,7 +215,6 @@ func thirdPersonMovement(delta):
 	elif justLanded:
 		snapVector = Vector3.DOWN
 	floor_snap_length = snapVector.y
-	move_and_slide()
 	
 	#if velocity.length() > 0.2:
 		#var lookDirection = Vector2(velocity.z, velocity.x)
@@ -224,8 +230,8 @@ func firstPersonMovment(delta):
 	if is_on_floor():
 		isInAir = false
 	# Add the gravity.
-	if not is_on_floor() and isGravity:
-		velocity.y -= gravity * delta
+	#if not is_on_floor() and isGravity:
+		#velocity.y -= gravity * delta
 		
 	#print(characterAnimator.current_animation)
 	# Handle Jump.
@@ -262,8 +268,6 @@ func firstPersonMovment(delta):
 			characterAnimator.play("idle")
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	move_and_slide()
 
 
 func setUsername(userName : String):

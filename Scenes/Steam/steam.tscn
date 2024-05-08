@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgsxnqwp4k010"]
+
+[ext_resource type="Script" path="res://Scripts/Steam/steam.gd" id="1_oxvv0"]
+[ext_resource type="PackedScene" uid="uid://br01chminlckq" path="res://player.tscn" id="2_0el6g"]
+
+[node name="Steam" type="Node"]
+script = ExtResource("1_oxvv0")
+playerScene = ExtResource("2_0el6g")
