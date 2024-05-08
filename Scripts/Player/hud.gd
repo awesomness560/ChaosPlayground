@@ -70,4 +70,4 @@ func _on_resume_button_pressed():
 
 
 func _on_disconnect_pressed():
-	pass
+	MultiplayerManager.disconnectPlayer()

@@ -40,3 +40,10 @@ func connectPlayer(peer_id):
 func removePlayer(peer_id):
 	var player = get_node(str(peer_id))
 	player.queue_free()
+
+func disconnectPlayer():
+	multiplayer.multiplayer_peer = null
+	for child in get_children():
+		child.queue_free()
+	
+	SignalBus.switchToMainMenu.emit()

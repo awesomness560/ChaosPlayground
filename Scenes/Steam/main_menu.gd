@@ -9,6 +9,9 @@ var peer : SteamMultiplayerPeer = SteamMultiplayerPeer.new()
 @export var lobbyButtonTemplate : PackedScene
 @export var lobbyLineEdit : LineEdit
 
+func _enter_tree():
+	levelHouse = get_parent().get_node("LevelHouse")
+
 func _ready():
 	levelHouse.spawn_function = spawnLevel
 	

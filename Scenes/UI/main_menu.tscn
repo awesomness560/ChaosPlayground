@@ -1,0 +1,204 @@
+[gd_scene load_steps=18 format=3 uid="uid://cwhpcnmmo5pgv"]
+
+[ext_resource type="Script" path="res://Scenes/Steam/main_menu.gd" id="1_um3lo"]
+[ext_resource type="PackedScene" uid="uid://djfvjtimrpqxc" path="res://Scenes/Levels/desertLevel.tscn" id="2_i757x"]
+[ext_resource type="PackedScene" uid="uid://3h6hoqewgui8" path="res://Scenes/UI/lobby_button_template.tscn" id="3_5ff5o"]
+[ext_resource type="PackedScene" uid="uid://bn8bm7rlxatn0" path="res://Scenes/Visuals/portal.tscn" id="4_cytc7"]
+[ext_resource type="PackedScene" uid="uid://bq4eusxtc0bju" path="res://Scenes/UI/space_2.tscn" id="6_50n48"]
+[ext_resource type="Script" path="res://Scripts/UI/menu.gd" id="7_42s42"]
+[ext_resource type="Script" path="res://Scripts/UI/menu_button.gd" id="8_qyixk"]
+[ext_resource type="PackedScene" uid="uid://cf1ixy2ebpht3" path="res://Scenes/Player/spacer.tscn" id="9_0sxlf"]
+[ext_resource type="Script" path="res://Scripts/UI/host_button.gd" id="10_t5p0s"]
+[ext_resource type="AudioStream" uid="uid://c16x2c7a5rkrw" path="res://Assets/Sounds/Music/Galactic Rap.mp3" id="11_65hl1"]
+[ext_resource type="Texture2D" uid="uid://cn1mdopb0d1co" path="res://Assets/Icons/ChasIconSolid.png" id="12_euscn"]
+
+[sub_resource type="Environment" id="Environment_u7sjf"]
+ambient_light_energy = 0.0
+glow_enabled = true
+glow_bloom = 1.0
+glow_blend_mode = 0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lkmyg"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xa5mn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0bqga"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7a6r5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_328ls"]
+
+[node name="MainMenu" type="Node" node_paths=PackedStringArray("portal", "lobbyVBox", "lobbyLineEdit")]
+script = ExtResource("1_um3lo")
+mainLevel = ExtResource("2_i757x")
+portal = NodePath("Portal")
+lobbyVBox = NodePath("CanvasLayer/JoinMenu/LobbyContainer/LobbyVBox")
+lobbyButtonTemplate = ExtResource("3_5ff5o")
+lobbyLineEdit = NodePath("CanvasLayer/JoinMenu/ManualJoin/LineEdit")
+
+[node name="Portal" parent="." instance=ExtResource("4_cytc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.51259, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.64987, -5.10956)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_u7sjf")
+
+[node name="Space2" parent="." instance=ExtResource("6_50n48")]
+texture = SubResource("ViewportTexture_lkmyg")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainMenu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_42s42")
+
+[node name="Play" type="Button" parent="CanvasLayer/MainMenu" node_paths=PackedStringArray("menuToSwitch")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.465
+anchor_top = 0.458
+anchor_right = 0.535
+anchor_bottom = 0.542
+offset_left = -400.68
+offset_top = -0.284027
+offset_right = -401.32
+offset_bottom = 0.283966
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xa5mn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0bqga")
+text = "Play"
+script = ExtResource("8_qyixk")
+menuToSwitch = NodePath("../../Join_Host Menu")
+animationName = "rock_gate|rock_gate|gate_crush"
+
+[node name="Join_Host Menu" type="VBoxContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -295.0
+offset_top = -69.0
+offset_right = -103.0
+offset_bottom = 69.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("7_42s42")
+animation = "rock_gate|rock_gate|gate_crush"
+
+[node name="JoinButton" type="Button" parent="CanvasLayer/Join_Host Menu" node_paths=PackedStringArray("menuToSwitch")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7a6r5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_328ls")
+text = "Join Game"
+script = ExtResource("8_qyixk")
+menuToSwitch = NodePath("../../JoinMenu")
+
+[node name="Spacer" parent="CanvasLayer/Join_Host Menu" instance=ExtResource("9_0sxlf")]
+layout_mode = 2
+
+[node name="HostButton" type="Button" parent="CanvasLayer/Join_Host Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7a6r5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_328ls")
+text = "Host Game"
+script = ExtResource("10_t5p0s")
+
+[node name="JoinMenu" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_42s42")
+
+[node name="LobbyContainer" type="ScrollContainer" parent="CanvasLayer/JoinMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.005
+anchor_top = 0.134
+anchor_right = 0.25
+anchor_bottom = 0.958
+offset_left = 20.24
+offset_top = 0.167998
+offset_right = 19.9999
+offset_bottom = 0.215959
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="LobbyVBox" type="VBoxContainer" parent="CanvasLayer/JoinMenu/LobbyContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Refresh" type="Button" parent="CanvasLayer/JoinMenu"]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 18.0
+offset_right = 215.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 25
+text = "Refresh"
+
+[node name="ManualJoin" type="VBoxContainer" parent="CanvasLayer/JoinMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 278.0
+offset_top = -102.0
+offset_right = 476.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/JoinMenu/ManualJoin"]
+layout_mode = 2
+placeholder_text = "Enter Lobby Code Here"
+
+[node name="JoinWithCode" type="Button" parent="CanvasLayer/JoinMenu/ManualJoin"]
+layout_mode = 2
+text = "Join With Code"
+
+[node name="ChasIconSolid" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+position = Vector2(171, 102)
+scale = Vector2(0.474, 0.474)
+texture = ExtResource("12_euscn")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_right = 90.0
+offset_bottom = 176.0
+grow_horizontal = 2
+texture = ExtResource("12_euscn")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_65hl1")
+autoplay = true
+
+[connection signal="pressed" from="CanvasLayer/JoinMenu/Refresh" to="." method="_on_refresh_pressed"]
+[connection signal="pressed" from="CanvasLayer/JoinMenu/ManualJoin/JoinWithCode" to="." method="_on_join_with_code_pressed"]

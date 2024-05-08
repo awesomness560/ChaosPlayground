@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq4eusxtc0bju"]
+
+[ext_resource type="Shader" path="res://Assets/Shaders/stars.gdshader" id="1_3vuex"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_sm21j"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2lktb"]
+shader = ExtResource("1_3vuex")
+shader_parameter/bg_color = null
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ejt4h"]
+
+[node name="Space2" type="Sprite3D"]
+transform = Transform3D(-1, 8.74228e-08, -4.37114e-08, 8.74228e-08, 1, -4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 0, -0.0759294, 2.34332)
+texture = SubResource("ViewportTexture_sm21j")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(4800, 4800)
+
+[node name="TextureRect" type="TextureRect" parent="SubViewport"]
+material = SubResource("ShaderMaterial_2lktb")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_ejt4h")

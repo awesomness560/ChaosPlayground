@@ -135,6 +135,11 @@ func _physics_process(delta):
 	if not is_on_floor() and isGravity:
 		velocity.y -= gravity * delta
 	
+	if isGravity:
+		velocity.y -= gravity * delta
+	elif not velocity.y < 0:
+		velocity.y -= gravity * delta
+	
 	if not isPaused:
 		match controlMode:
 			ControllerType.FIRST_PERSON:
@@ -202,10 +207,6 @@ func thirdPersonMovement(delta):
 	
 	velocity.x = moveDirection.x * SPEED
 	velocity.z = moveDirection.z * SPEED
-	#if isGravity:
-		#velocity.y -= gravity * delta
-	#elif not velocity.y < 0:
-		#velocity.y -= gravity * delta
 	
 	var justLanded : bool = is_on_floor() and snapVector == Vector3.ZERO
 	var isJumping : bool = is_on_floor() and Input.is_action_just_pressed("jump")
@@ -251,7 +252,7 @@ func firstPersonMovment(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
 		if isRunning:
