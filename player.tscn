@@ -1,8 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://br01chminlckq"]
+[gd_scene load_steps=13 format=3 uid="uid://br01chminlckq"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody3D.gd" id="1_502fm"]
 [ext_resource type="Script" path="res://Scripts/Abilities/ability_manager.gd" id="2_c20k6"]
-[ext_resource type="Material" uid="uid://b12hlj4bxcqdb" path="res://Materials/playerSeeThrough.tres" id="2_x4883"]
 [ext_resource type="Script" path="res://Scripts/player_camera.gd" id="3_amtfd"]
 [ext_resource type="Resource" uid="uid://dg8n8figmoq21" path="res://Resources/Abilities/hollow_purple.tres" id="6_i7tg1"]
 [ext_resource type="Script" path="res://Scripts/third_person_camera.gd" id="8_5iau8"]
@@ -10,15 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://d1b16gqb42bv6" path="res://Scenes/Player/hud.tscn" id="9_mtpk3"]
 [ext_resource type="Script" path="res://Scripts/Modules/health_module.gd" id="10_icsec"]
 [ext_resource type="PackedScene" uid="uid://da3xpdwuyxm0p" path="res://Scenes/Mapa/map_camera.tscn" id="11_8ulp4"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_dlk0p"]
-material = ExtResource("2_x4883")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fbmt0"]
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_1fh3h"]
-material = SubResource("StandardMaterial3D_fbmt0")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_23jgk"]
 viewport_path = NodePath("Visuals/AboveHead/SubViewport")
@@ -75,16 +65,6 @@ camMount = NodePath("Cameras/CameraMount")
 healthModule = NodePath("HealthModule")
 
 [node name="Visuals" type="Node3D" parent="."]
-
-[node name="Mesh" type="MeshInstance3D" parent="Visuals"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 2.06791, 0)
-visible = false
-mesh = SubResource("CapsuleMesh_dlk0p")
-skeleton = NodePath("../..")
-
-[node name="Eyes" type="MeshInstance3D" parent="Visuals/Mesh"]
-transform = Transform3D(0.255, 0, 0, 0, 0.255, 0, 0, 0, 0.255, 0, 0.479182, -0.496471)
-mesh = SubResource("SphereMesh_1fh3h")
 
 [node name="MainCharacter" parent="Visuals" instance=ExtResource("8_pumas")]
 transform = Transform3D(-2.395, 0, 3.61635e-07, 0, 2.395, 0, -3.61635e-07, 0, -2.395, 0, -0.90546, 0)
@@ -211,6 +191,7 @@ camera = NodePath("../Cameras/FirstPersonCamera")
 player = NodePath("..")
 playerVisuals = NodePath("../Visuals")
 hollowPurpleResource = ExtResource("6_i7tg1")
+currentAbilityIndex = null
 
 [node name="Cameras" type="Node3D" parent="."]
 

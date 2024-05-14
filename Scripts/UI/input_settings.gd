@@ -80,6 +80,7 @@ func _input(event):
 			actionToRemap = null
 			remappingButton = null
 			
+			ControllerIcons.input_type_changed.emit(ControllerIcons.InputType.KEYBOARD_MOUSE)
 			accept_event()
 
 func updateActionList(button, event):

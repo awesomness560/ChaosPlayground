@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cwhpcnmmo5pgv"]
+[gd_scene load_steps=19 format=3 uid="uid://cwhpcnmmo5pgv"]
 
 [ext_resource type="Script" path="res://Scenes/Steam/main_menu.gd" id="1_um3lo"]
 [ext_resource type="PackedScene" uid="uid://djfvjtimrpqxc" path="res://Scenes/Levels/desertLevel.tscn" id="2_i757x"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cf1ixy2ebpht3" path="res://Scenes/Player/spacer.tscn" id="9_0sxlf"]
 [ext_resource type="Script" path="res://Scripts/UI/host_button.gd" id="10_t5p0s"]
 [ext_resource type="AudioStream" uid="uid://c16x2c7a5rkrw" path="res://Assets/Sounds/Music/Galactic Rap.mp3" id="11_65hl1"]
+[ext_resource type="PackedScene" uid="uid://bhx4d6qk5ljqv" path="res://Scenes/UI/settings.tscn" id="11_kjsr4"]
 [ext_resource type="Texture2D" uid="uid://cn1mdopb0d1co" path="res://Assets/Icons/ChasIconSolid.png" id="12_euscn"]
 
 [sub_resource type="Environment" id="Environment_u7sjf"]
@@ -78,6 +79,26 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_0bqga")
 text = "Play"
 script = ExtResource("8_qyixk")
 menuToSwitch = NodePath("../../Join_Host Menu")
+animationName = "rock_gate|rock_gate|gate_crush"
+
+[node name="Settings" type="Button" parent="CanvasLayer/MainMenu" node_paths=PackedStringArray("menuToSwitch")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.465
+anchor_top = 0.458
+anchor_right = 0.535
+anchor_bottom = 0.542
+offset_left = -400.68
+offset_top = 59.216
+offset_right = -401.32
+offset_bottom = 59.784
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xa5mn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0bqga")
+text = "Settings"
+script = ExtResource("8_qyixk")
+menuToSwitch = NodePath("../../Settings")
 animationName = "rock_gate|rock_gate|gate_crush"
 
 [node name="Join_Host Menu" type="VBoxContainer" parent="CanvasLayer"]
@@ -196,9 +217,17 @@ texture = ExtResource("12_euscn")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="Settings" parent="CanvasLayer" instance=ExtResource("11_kjsr4")]
+visible = false
+offset_left = 696.0
+offset_top = -28.0
+offset_right = 62.0
+offset_bottom = 41.0
+
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_65hl1")
 autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="CanvasLayer/JoinMenu/Refresh" to="." method="_on_refresh_pressed"]
 [connection signal="pressed" from="CanvasLayer/JoinMenu/ManualJoin/JoinWithCode" to="." method="_on_join_with_code_pressed"]

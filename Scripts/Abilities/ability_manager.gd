@@ -108,4 +108,4 @@ func getAbility(resource : BaseAbilityResource):
 	
 	if player.is_multiplayer_authority():
 		var hud : HUD = player.hud
-		ability.abilityHud = hud.addAbility(ability, resource.icon)
+		ability.abilityHud = hud.addAbility(ability, resource.icon, resource.inputDict)

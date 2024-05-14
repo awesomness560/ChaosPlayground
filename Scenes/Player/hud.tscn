@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://d1b16gqb42bv6"]
+[gd_scene load_steps=14 format=3 uid="uid://d1b16gqb42bv6"]
 
 [ext_resource type="PackedScene" uid="uid://kwsokqernedg" path="res://Scenes/Modules/health_bar.tscn" id="1_663go"]
 [ext_resource type="Script" path="res://Scripts/Player/hud.gd" id="1_hpugf"]
 [ext_resource type="Texture2D" uid="uid://ew77ki5612h2" path="res://Assets/circle-32.png" id="2_f5672"]
 [ext_resource type="PackedScene" uid="uid://c7rseh1u8jvhd" path="res://Scenes/Abilities/ability_container.tscn" id="2_rgujw"]
+[ext_resource type="PackedScene" uid="uid://blqxiskc3shxb" path="res://Scenes/UI/ui_prompts_container.tscn" id="3_rq5k1"]
 [ext_resource type="PackedScene" uid="uid://cf1ixy2ebpht3" path="res://Scenes/Player/spacer.tscn" id="5_q85ee"]
 [ext_resource type="Script" path="res://Scripts/UI/menu.gd" id="6_8vo24"]
 [ext_resource type="Script" path="res://Scripts/UI/menu_button.gd" id="7_h3dbd"]
@@ -20,6 +21,7 @@
 [node name="Hud" type="CanvasLayer" node_paths=PackedStringArray("abilityContainer", "sessionIDButton", "healthBar", "pauseMenu", "normalHUD")]
 script = ExtResource("1_hpugf")
 abilityTemplate = ExtResource("2_rgujw")
+abilityHints = ExtResource("3_rq5k1")
 abilityContainer = NodePath("NormalHUD/Hotbar/AbilitiesContainer")
 sessionIDButton = NodePath("PauseMenu/CopySessionID")
 healthBar = NodePath("NormalHUD/HealthBar")

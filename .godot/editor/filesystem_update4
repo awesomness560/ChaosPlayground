@@ -1,4 +1,4 @@
-res://Scenes/Steam/main_menu.tscn
+res://player.tscn
 res://Materials/playerSeeThrough.tres
 res://Assets/water_effect2.gdshader
 res://Assets/Shaders/cooldownProgress.gdshader
@@ -6,9 +6,8 @@ res://Resources/blocky_lib.tres
 res://Assets/meshBlocks.tres
 res://Assets/Shaders/portal_shader.tres
 res://Assets/Shaders/stars.gdshader
-res://Assets/Shaders/outlineGlow.gdshader
 res://Assets/water_effect.gdshader
-res://player.tscn
+res://Assets/Shaders/outlineGlow.gdshader
 res://Scenes/multiplayer_ui.tscn
 res://main_scene.tscn
 res://Scenes/Steam/main.tscn
@@ -16,10 +15,16 @@ res://Scenes/Steam/level.tscn
 res://Scenes/Player/hud.tscn
 res://Scenes/UI/settings.tscn
 res://Scenes/UI/input_button.tscn
+res://Scenes/Steam/main_menu.tscn
 res://Scenes/Visuals/portal.tscn
 res://Scenes/Steam/steam.tscn
-res://Scenes/Autoloads/multiplayer_manager.tscn
-res://Scenes/Autoloads/SignalBus.tscn
+res://Scenes/Levels/desertLevel.tscn
+res://test_world.tscn
+res://addons/fpc/character.tscn
 res://Scenes/UI/main_menu.tscn
-res://Scenes/UI/space_2.tscn
-res://Scripts/CharacterBody3D.gd
+res://Scenes/Abilities/ability_container.tscn
+res://Scenes/UI/ui_prompts_container.tscn
+res://Scenes/UI/icon_label_pair.tscn
+res://Scenes/world.tscn
+res://scripts/player.gd
+res://Scenes/player.tscn

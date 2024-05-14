@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0jdxppjvbh24"]
+
+[ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_jmcea"]
+[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://Scenes/player.tscn" id="3_bryoi"]
+[ext_resource type="PackedScene" uid="uid://djfvjtimrpqxc" path="res://Scenes/Levels/desertLevel.tscn" id="3_wk117"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ed3bo"]
+panorama = ExtResource("1_jmcea")
+
+[sub_resource type="Sky" id="Sky_f61bo"]
+sky_material = SubResource("PanoramaSkyMaterial_ed3bo")
+
+[sub_resource type="Environment" id="Environment_cpfpx"]
+background_mode = 2
+sky = SubResource("Sky_f61bo")
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 2
+
+[node name="World" type="Node3D"]
+
+[node name="Enviroment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Enviroment"]
+environment = SubResource("Environment_cpfpx")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="Enviroment"]
+transform = Transform3D(0.813152, 0.411573, -0.411573, 0, 0.707107, 0.707107, 0.582052, -0.574985, 0.574985, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("3_bryoi")]
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("3_wk117")]

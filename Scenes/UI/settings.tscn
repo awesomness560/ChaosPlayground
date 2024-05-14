@@ -15,15 +15,15 @@ script = ExtResource("1_jdh7s")
 
 [node name="InputSettings" type="PanelContainer" parent="." node_paths=PackedStringArray("actionList")]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -408.0
-offset_top = -255.0
-offset_right = 408.0
-offset_bottom = 255.0
+anchors_preset = -1
+anchor_left = 0.146
+anchor_top = 0.106
+anchor_right = 0.854
+anchor_bottom = 0.894
+offset_left = -0.192015
+offset_top = 0.311996
+offset_right = 0.191963
+offset_bottom = -0.312035
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jtw8v")

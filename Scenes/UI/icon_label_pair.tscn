@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://docybea2wh5h5"]
+
+[ext_resource type="Script" path="res://addons/controller_icons/objects/ControllerIconTexture.gd" id="1_1btsl"]
+
+[sub_resource type="Texture2D" id="Texture2D_bgqkm"]
+resource_local_to_scene = true
+resource_name = ""
+script = ExtResource("1_1btsl")
+path = "launchAbility"
+show_mode = 0
+force_type = 0
+
+[node name="IconLabelPair" type="HBoxContainer"]
+editor_description = "DO NOT move around the children in this container"
+alignment = 2
+
+[node name="Icon" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("Texture2D_bgqkm")
+expand_mode = 1
+
+[node name="Spacer" type="Control" parent="."]
+custom_minimum_size = Vector2(15, 2.08165e-12)
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+bbcode_enabled = true
+fit_content = true

@@ -1,7 +1,8 @@
 extends CanvasLayer
 class_name HUD
 
-@export var abilityTemplate : PackedScene
+@export var abilityTemplate : PackedScene 
+@export var abilityHints : PackedScene ##The abilty control hint template
 @export var abilityContainer : HBoxContainer
 @export var sessionIDButton : Button
 @export var healthBar : ProgressBar
@@ -16,9 +17,16 @@ func _ready():
 	print(GlobalSteam.lobbyId)
 	sessionIDButton.text = "Join Code: " + str(id) + "(Press to copy)"
 
-func addAbility(ability : BaseAbility, icon : CompressedTexture2D) -> AbilityHudTemplate:
+func addAbility(ability : BaseAbility, icon : CompressedTexture2D, inputDict : Dictionary) -> AbilityHudTemplate:
+	
+	#Config control hints
+	var uiPrompts : ControlPrompts = abilityHints.instantiate()
+	uiPrompts.config(inputDict)
+	get_child(1).add_child(uiPrompts) #HACK: Using get_child again (Will break if scene tree is changed)
+	
+	#Config hotbar
 	var template : AbilityHudTemplate = abilityTemplate.instantiate()
-	template.config(ability, icon)
+	template.config(ability, icon, uiPrompts)
 	abilityContainer.add_child(template)
 	abilityContainer.move_child(template, abilityContainer.get_child_count() - 2)
 	
