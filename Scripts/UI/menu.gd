@@ -1,6 +1,6 @@
 extends Control
 class_name Menu
-
+#TODO: Add video settings for the world environment
 var lastMenu : Control
 var useEsc : bool = true ##Turn this off if you don't want to use ESC to move back a menu
 

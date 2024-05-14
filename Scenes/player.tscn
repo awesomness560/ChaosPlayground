@@ -1,6 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://kicjwmh02uwf"]
-
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_wkneb"]
+[gd_scene load_steps=8 format=3 uid="uid://kicjwmh02uwf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_26tbo"]
 height = 1.6
@@ -79,14 +77,8 @@ _data = {
 "roll": SubResource("Animation_s7f04")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("neck", "head", "eyes", "animationPlayer", "raycast")]
+[node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-script = ExtResource("1_wkneb")
-neck = NodePath("Neck")
-head = NodePath("Neck/Head")
-eyes = NodePath("Neck/Head/Eyes")
-animationPlayer = NodePath("Neck/Head/Eyes/AnimationPlayer")
-raycast = NodePath("RayCast")
 
 [node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_26tbo")

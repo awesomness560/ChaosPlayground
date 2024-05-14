@@ -33,6 +33,8 @@ var hud : HUD
 @export var spawnCamera : SpawnCamera
 #@export var thirdPersonCamera : ThirdPersonCamera
 @export var usernameLabel : Label
+@export_subgroup("FirstPerson")
+@export var firstPersonController : FirstPersonController
 @export_subgroup("Third Person")
 @export var thirdPersonCamera : Camera3D
 @export var springArm : SpringArm3D
@@ -108,7 +110,8 @@ func matchCurrentCamera(control : ControllerType):
 	
 	match control:
 		ControllerType.FIRST_PERSON:
-			firstPersonCamera.current = is_multiplayer_authority()
+			firstPersonController.setCam(is_multiplayer_authority())
+			#firstPersonCamera.current = is_multiplayer_authority()
 		ControllerType.THIRD_PERSON:
 			thirdPersonCamera.current = is_multiplayer_authority()
 			thirdPersonCamera.get_parent_node_3d().global_rotation = firstPersonCamera.global_rotation
@@ -119,8 +122,8 @@ func _input(event):
 	if not is_multiplayer_authority() or isPaused: return
 	
 	match controlMode:
-		ControllerType.FIRST_PERSON:
-			firstPersonInput(event)
+		#ControllerType.FIRST_PERSON:
+			#firstPersonInput(event)
 		ControllerType.THIRD_PERSON:
 			thirdPersonInput(event)
 		ControllerType.THIRD_PERSON_SHOULDER:
@@ -144,13 +147,16 @@ func _physics_process(delta):
 		match controlMode:
 			ControllerType.FIRST_PERSON:
 				threeDmodel.hide()
-				firstPersonMovment(delta)
+				firstPersonController.isCurrent = true
+				#firstPersonMovment(delta)
 			ControllerType.THIRD_PERSON:
 				threeDmodel.show()
 				thirdPersonMovement(delta)
+				firstPersonController.isCurrent = false
 			ControllerType.THIRD_PERSON_SHOULDER:
 				threeDmodel.show()
 				thirdPersonShoulderMovement(delta)
+				firstPersonController.isCurrent = false
 	
 	move_and_slide()
 

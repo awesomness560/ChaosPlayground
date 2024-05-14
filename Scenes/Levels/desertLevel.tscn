@@ -1,45 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://djfvjtimrpqxc"]
+[gd_scene load_steps=10 format=3 uid="uid://djfvjtimrpqxc"]
 
 [ext_resource type="VoxelBlockyLibrary" uid="uid://b2fxfhw0xvfma" path="res://Resources/blocky_lib.tres" id="1_jpben"]
+[ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_lsr6j"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7o28t"]
-sky_top_color = Color(0.0745098, 0.486275, 0.658824, 1)
-sky_curve = 0.0699775
-ground_bottom_color = Color(0.180392, 0.67451, 0.937255, 1)
-ground_horizon_color = Color(1, 1, 1, 1)
-ground_curve = 0.0263903
-ground_energy_multiplier = 1.79
-sun_angle_max = 0.0
-sun_curve = 31.1904
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ed3bo"]
+panorama = ExtResource("1_lsr6j")
 
-[sub_resource type="Sky" id="Sky_g7x33"]
-sky_material = SubResource("ProceduralSkyMaterial_7o28t")
+[sub_resource type="Sky" id="Sky_f61bo"]
+sky_material = SubResource("PanoramaSkyMaterial_ed3bo")
 
-[sub_resource type="Environment" id="Environment_8lf10"]
+[sub_resource type="Environment" id="Environment_evgms"]
 background_mode = 2
-background_color = Color(1, 1, 1, 1)
-background_energy_multiplier = 3.87
-sky = SubResource("Sky_g7x33")
-ambient_light_source = 3
+sky = SubResource("Sky_f61bo")
 ambient_light_color = Color(1, 1, 1, 1)
-ssr_enabled = true
-ssao_enabled = true
-ssao_radius = 1.32
-ssil_enabled = true
-ssil_radius = 8.37
-sdfgi_enabled = true
-sdfgi_use_occlusion = true
-sdfgi_cascades = 8
-sdfgi_energy = 0.15
-glow_enabled = true
-glow_normalized = true
-glow_intensity = 1.98
-glow_bloom = 0.39
-fog_enabled = true
-fog_light_color = Color(0.298039, 0.552941, 0.701961, 1)
-fog_light_energy = 3.06
-fog_sun_scatter = 1.0
-fog_density = 0.001
+tonemap_mode = 2
 
 [sub_resource type="Curve" id="Curve_da0lf"]
 _data = [Vector2(0.021978, 1), 0.0, 0.0, 0, 0, Vector2(0.379121, 0.340659), 0.0, 0.0, 0, 0, Vector2(0.989011, 1), 0.0, 0.0, 0, 0]
@@ -57,20 +31,11 @@ curve = SubResource("Curve_da0lf")
 library = ExtResource("1_jpben")
 
 [node name="WorldEnvironment" type="WorldEnvironment"]
-environment = SubResource("Environment_8lf10")
+environment = SubResource("Environment_evgms")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.906617, 0.421954, 0, -0.421954, 0.906617, -0.482311, 3.79714, 7.65122)
-light_energy = 1.049
-light_indirect_energy = 13.253
-light_volumetric_fog_energy = 11.819
-light_angular_distance = 25.9
+[node name="DirectionalLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.813152, 0.411573, -0.411573, 0, 0.707107, 0.707107, 0.582052, -0.574985, 0.574985, 0, 0, 0)
 shadow_enabled = true
-shadow_bias = 5.035
-shadow_normal_bias = 0.975
-shadow_transmittance_bias = -16.0
-shadow_opacity = 0.9
-shadow_blur = 0.0
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["terrain"]]
 generator = SubResource("VoxelGeneratorNoise2D_4ljsh")
