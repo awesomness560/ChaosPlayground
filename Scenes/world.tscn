@@ -28,23 +28,5 @@ transform = Transform3D(0.813152, 0.411573, -0.411573, 0, 0.707107, 0.707107, 0.
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("3_bryoi")]
-BUNNY_HOP_ACCELERATION = null
-JUMP_VELOCITY = null
-WALKING_SPEED = null
-SPRINTING_SPEED = null
-CROUCHING_SPEED = null
-CROUCHING_DEPTH = null
-SLIDING_SPEED = null
-MOUSE_SENS = null
-LERP_SPEED = null
-AIR_LERP_SPEED = null
-FREE_LOOK_TILT_AMOUNT = null
-WIGGLE_ON_WALKING_SPEED = null
-WIGGLE_ON_SPRINTING_SPEED = null
-WIGGLE_ON_CROUCHING_SPEED = null
-rollThreshold = null
-WIGGLE_ON_WALKING_INTENSITY = null
-WIGGLE_ON_SPRINTING_INTENSITY = null
-WIGGLE_ON_CROUCHING_INTENSITY = null
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("3_wk117")]

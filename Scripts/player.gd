@@ -9,6 +9,11 @@ class_name FirstPersonController
 @export var CROUCHING_SPEED = 3.0
 @export var CROUCHING_DEPTH = -0.9 ##How far the camera goes down
 @export var SLIDING_SPEED = 5.0
+@export_group("FOV")
+@export var slidingFOV : float = 85
+@export var sprintingFOV : float = 95
+@export var walkingFOV : float = 75
+@export var crouchingFOV : float = 65
 @export_group("Sensitivity")
 @export var MOUSE_SENS = 0.25
 @export var LERP_SPEED = 10.0
@@ -54,6 +59,9 @@ var bunny_hop_speed = SPRINTING_SPEED
 var last_velocity = Vector3.ZERO
 var stand_after_roll = false
 
+enum state {SPRINTING, WALKING, SLIDING, CROUCHING}
+
+var movementState : state ##Contains the current state
 
 #func _ready():
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -89,9 +97,12 @@ func _physics_process(delta):
 		crouchingCollision.disabled = false
 		wiggle_current_intensity = WIGGLE_ON_CROUCHING_INTENSITY
 		wiggle_index += WIGGLE_ON_CROUCHING_SPEED * delta
+		movementState = state.CROUCHING
+		
 		if is_sprinting and input_dir != Vector2.ZERO and player.is_on_floor():
 			slidingTimer.start()
 			slide_vector = input_dir
+			movementState = state.SLIDING
 		elif !Input.is_action_pressed("RUN"):
 			slidingTimer.stop()
 		is_walking = false
@@ -112,6 +123,7 @@ func _physics_process(delta):
 			is_sprinting = true
 			is_crouching = false
 			thirdPersonAnimations.play("running")
+			movementState = state.SPRINTING
 		else:
 			current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
 			wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY
@@ -120,6 +132,7 @@ func _physics_process(delta):
 			is_sprinting = false
 			is_crouching = false
 			thirdPersonAnimations.play("walking")
+			movementState = state.WALKING
 	
 	if Input.is_action_pressed("free_look") or !slidingTimer.is_stopped():
 		is_free_looking = true
@@ -211,8 +224,20 @@ func _physics_process(delta):
 		player.velocity.z = move_toward(player.velocity.z, 0, current_speed)
 	
 	last_velocity = player.velocity
+	update_camera_fov()
 	
 	player.move_and_slide()
+
+func update_camera_fov():
+	match movementState:
+		state.SPRINTING:
+			camera.fov = lerp(camera.fov, sprintingFOV, 0.3)
+		state.WALKING:
+			camera.fov = lerp(camera.fov, walkingFOV, 0.3)
+		state.SLIDING:
+			camera.fov = lerp(camera.fov, slidingFOV, 0.3)
+		state.CROUCHING:
+			camera.fov = lerp(camera.fov, crouchingFOV, 0.3)
 
 
 func _on_sliding_timer_timeout():

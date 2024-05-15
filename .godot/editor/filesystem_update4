@@ -7,7 +7,6 @@ res://Assets/Shaders/portal_shader.tres
 res://Assets/Shaders/stars.gdshader
 res://Assets/water_effect.gdshader
 res://Assets/Shaders/outlineGlow.gdshader
-res://scripts/player.gd
 res://Scenes/multiplayer_ui.tscn
 res://main_scene.tscn
 res://Scenes/Steam/main.tscn
@@ -27,5 +26,5 @@ res://Scenes/UI/ui_prompts_container.tscn
 res://Scenes/UI/icon_label_pair.tscn
 res://Scenes/world.tscn
 res://Scenes/player.tscn
+res://Scripts/CharacterBody3D.gd
 res://Scripts/player.gd
-res://Scripts/scene_manager.gd

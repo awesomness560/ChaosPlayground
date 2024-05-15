@@ -122,7 +122,7 @@ _data = {
 "roll": SubResource("Animation_s7f04")
 }
 
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("firstPersonCamera", "visuals", "threeDmodel", "characterAnimator", "spawnCamera", "usernameLabel", "firstPersonController", "thirdPersonCamera", "springArm", "thirdPersonShoulderCam", "camMount", "healthModule") groups=["player"]]
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("firstPersonCamera", "visuals", "threeDmodel", "characterAnimator", "spawnCamera", "usernameLabel", "firstPersonController", "thirdPersonCamera", "springArm", "camMount", "healthModule") groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.932028, 0)
 collision_layer = 2
 script = ExtResource("1_502fm")
@@ -139,7 +139,6 @@ usernameLabel = NodePath("Visuals/AboveHead/SubViewport/Username")
 firstPersonController = NodePath("FirstPerson")
 thirdPersonCamera = NodePath("Cameras/ThirdPerson/ThirdPersonCamera")
 springArm = NodePath("Cameras/ThirdPerson")
-thirdPersonShoulderCam = NodePath("Cameras/CameraMount/SpringArm3D/Camera3D")
 camMount = NodePath("Cameras/CameraMount")
 healthModule = NodePath("HealthModule")
 
@@ -188,7 +187,6 @@ bones/27/rotation = Quaternion(0.290925, -0.01398, -0.163829, 0.942511)
 bones/28/position = Vector3(-2.40111e-06, 4.13666, 3.80471e-06)
 bones/28/rotation = Quaternion(0.336145, 0.0110856, 0.049269, 0.940455)
 bones/29/position = Vector3(-4.0942e-06, 2.59481, 1.55178e-05)
-bones/29/rotation = Quaternion(5.29424e-06, 5.59419e-07, 0.000230416, 1)
 bones/30/position = Vector3(1.83621e-06, 2.92387, -1.90033e-06)
 bones/31/rotation = Quaternion(0.36414, -0.568927, 0.619939, 0.399249)
 bones/32/position = Vector3(4.33524e-06, 12.9223, -7.88891e-06)
@@ -269,7 +267,6 @@ camera = NodePath("../Cameras/FirstPersonCamera")
 player = NodePath("..")
 playerVisuals = NodePath("../Visuals")
 hollowPurpleResource = ExtResource("6_i7tg1")
-currentAbilityIndex = null
 
 [node name="Cameras" type="Node3D" parent="."]
 
@@ -279,7 +276,7 @@ fov = 85.0
 script = ExtResource("3_amtfd")
 
 [node name="ThirdPerson" type="SpringArm3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00654296, -11.9346, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00654296, 0.449727, 0)
 spring_length = 3.0
 margin = 0.2
 script = ExtResource("8_5iau8")
@@ -289,7 +286,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.53862)
 current = true
 
 [node name="CameraMount" type="Node3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.536609, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.12068, -2.80339, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Cameras/CameraMount"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.01111, 1.47838, 0)
