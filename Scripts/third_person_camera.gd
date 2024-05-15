@@ -7,7 +7,7 @@ func _ready():
 	top_level = true
 	player = get_parent()
 
-func _unhandled_input(event):
+func _input(event): #HACK: This is not in unhandled input so when the pause menu is open this won't work as intended
 	if event is InputEventMouseMotion:
 		rotation_degrees.x -= event.relative.y * mouseSensitivity
 		rotation_degrees.x = clamp(rotation_degrees.x, -90, 30)

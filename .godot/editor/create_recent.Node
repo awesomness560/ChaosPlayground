@@ -1,3 +1,5 @@
+RemoteTransform3D
+MeshInstance3D
 Node3D
 VoxelViewer
 Control
@@ -11,5 +13,3 @@ Button
 MarginContainer
 ScrollContainer
 PanelContainer
-ColorRect
-GPUParticles3D

@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("1_23dmp")
 primaryPressDescription = "Launch Hollow Purple"
-speed = 30
+speed = 80
 damage = 20
 abilityScene = ExtResource("1_ivtae")
 icon = ExtResource("2_v4vi4")

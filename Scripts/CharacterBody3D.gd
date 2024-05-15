@@ -9,7 +9,8 @@ enum ControllerType {FIRST_PERSON, THIRD_PERSON, THIRD_PERSON_SHOULDER}
 var fov = false
 var lerp_speed= 1
 @export var controlMode : ControllerType : set = matchCurrentCamera
-@export var offsetThirdPerson : Vector3
+#FIXME: This offset is still not correct (The third person camera is slightly off)
+@export var offsetThirdPerson : Vector3 ##Offset for the third person camera
 @export_group("Speed")
 var SPEED = 5.0
 @export var walkingSpeed : float = 20

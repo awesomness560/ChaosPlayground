@@ -126,7 +126,6 @@ _data = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.932028, 0)
 collision_layer = 2
 script = ExtResource("1_502fm")
-offsetThirdPerson = Vector3(0, 3.3, 0)
 sensHorizontal = 0.2
 sensVetical = 0.2
 hudScene = ExtResource("9_mtpk3")
@@ -145,7 +144,7 @@ healthModule = NodePath("HealthModule")
 [node name="Visuals" type="Node3D" parent="."]
 
 [node name="MainCharacter" parent="Visuals" instance=ExtResource("8_pumas")]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, -0.90546, 0)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, -0.90546, 0)
 
 [node name="Skeleton3D" parent="Visuals/MainCharacter/Armature_004" index="0"]
 bones/0/position = Vector3(0.606682, -0.596489, -91.3064)
@@ -261,7 +260,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AbilityManager" type="Node3D" parent="." node_paths=PackedStringArray("camera", "player", "playerVisuals")]
-transform = Transform3D(0.999456, -0.032915, -0.00232149, 0.0318136, 0.942561, 0.332516, -0.0087566, -0.332408, 0.943095, -0.161359, -1.56559, 0.794153)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6562, 0)
 script = ExtResource("2_c20k6")
 camera = NodePath("../Cameras/FirstPersonCamera")
 player = NodePath("..")
@@ -350,13 +349,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6562, 0)
 current = true
 
 [node name="AbilityManagerRemoteTransform" type="RemoteTransform3D" parent="FirstPerson/Neck/Head/Eyes/Camera"]
-transform = Transform3D(0.999456, -0.032915, -0.00232149, 0.0318136, 0.942561, 0.332516, -0.0087566, -0.332408, 0.943095, -0.161359, -2.22179, 0.794153)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 remote_path = NodePath("../../../../../../AbilityManager")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FirstPerson/Neck/Head/Eyes"]
 libraries = {
 "": SubResource("AnimationLibrary_8twm5")
 }
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="FirstPerson/Neck/Head"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+remote_path = NodePath("../../../../Visuals/MainCharacter")
+update_position = false
+update_scale = false
 
 [node name="SlidingTimer" type="Timer" parent="FirstPerson"]
 wait_time = 1.5
