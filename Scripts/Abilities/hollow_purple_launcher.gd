@@ -13,7 +13,7 @@ func _process(delta):
 	checkCooldownTime()
 
 func config():
-	abilityManager = get_parent()
+	abilityManager = get_parent().get_parent() #HACK: Too many get parents
 
 func setToResource(resource : BaseAbilityResource):
 	abilityResource = resource

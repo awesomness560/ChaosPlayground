@@ -20,7 +20,7 @@ func _ready():
 	pass
 
 func config():
-	var terrain : VoxelTerrain = get_tree().get_first_node_in_group("terrain")
+	var terrain : VoxelTerrain = get_tree().get_first_node_in_group("terrain") #HACK: This piece of code could break some stuff if the terrain isn't named "terrain" exactly
 	voxelTool = terrain.get_voxel_tool()
 	voxelTool.channel = VoxelBuffer.CHANNEL_TYPE
 	voxelTool.value = 0
@@ -69,7 +69,7 @@ func _on_hollow_purple_animation_finished(anim_name):
 	linear_velocity = velocity
 	isAbleToBreak = true
 	#HACK: I am using too many get_parent(). Please don't do this
-	var cam : PlayerCamera = get_parent().get_parent().camera
+	var cam : PlayerCamera = get_parent().get_parent().get_parent().camera
 	cam._camera_shake()
 	
 	abilityManager.player.controlMode = abilityManager.player.ControllerType.FIRST_PERSON

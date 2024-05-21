@@ -26,7 +26,4 @@ res://Scenes/UI/ui_prompts_container.tscn
 res://Scenes/UI/icon_label_pair.tscn
 res://Scenes/world.tscn
 res://Scenes/player.tscn
-res://Resources/Abilities/hollow_purple.tres
-res://Scripts/third_person_camera.gd
 res://Scenes/Abilities/hollow_purple_launcher.tscn
-res://Scripts/CharacterBody3D.gd

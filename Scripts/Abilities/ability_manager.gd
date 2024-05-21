@@ -1,4 +1,4 @@
-extends Node3D
+extends MultiplayerSpawner
 class_name AbilityManager
 
 @export var camera : Camera3D
@@ -14,14 +14,14 @@ var abilities : Array[BaseAbility] ##Array of currently held abilities
 @export var currentAbilityIndex : int = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	spawn_function = getAbility
+	
 	await get_tree().create_timer(1).timeout
-	rpc("getAbility", hollowPurpleResource)
+	spawn(hollowPurpleResource)
 	await get_tree().create_timer(1).timeout
-	rpc("getAbility", hollowPurpleResource)
+	spawn(hollowPurpleResource)
 	await get_tree().create_timer(1).timeout
-	rpc("getAbility", hollowPurpleResource)
-	await get_tree().create_timer(3).timeout
-	rpc("getAbility", hollowPurpleResource)
+	spawn(hollowPurpleResource)
 	
 	setAbilityActive(currentAbilityIndex)
 
@@ -31,6 +31,8 @@ func _process(delta):
 	pass
 
 func _unhandled_input(event):
+	if not player.is_multiplayer_authority(): return
+	
 	var abilitiesSize : int = abilities.size()
 	
 	if event.is_action_pressed("changeActiveAbilityLeft") and not isLocked and player.is_multiplayer_authority():
@@ -97,12 +99,11 @@ func setLocked(status : bool):
 	if player.is_multiplayer_authority():
 		ability.abilityHud.setActive(status)
 
-@rpc("any_peer", "call_local")
 func getAbility(resource : BaseAbilityResource):
 	var ability : BaseAbility = resource.abilityScene.instantiate()
 	ability.abilityResourceBase = resource
 	
-	add_child(ability, true)
+	get_child(0).add_child(ability, true)
 	ability.config()
 	abilities.append(ability)
 	
