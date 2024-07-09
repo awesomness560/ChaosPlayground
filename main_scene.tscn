@@ -10,3 +10,5 @@ script = ExtResource("1_jtvhr")
 [node name="CanvasLayer" parent="." instance=ExtResource("2_imde0")]
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("3_grbmd")]
+
+[editable path="WorldEnvironment"]
